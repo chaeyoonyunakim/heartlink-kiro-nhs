@@ -4,15 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}HeartLink{% endblock %} — NHS HeartLink</title>
-
-  <!-- NHS.UK frontend CSS (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nhsuk-frontend@9.5.0/dist/nhsuk.min.css">
-
-  <!-- Custom dashboard styles -->
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <!-- NHS Header -->
+  <!-- Top bar — global links (like england.nhs.uk dark bar) -->
+  <div class="hl-topbar">
+    <div class="nhsuk-width-container">
+      <nav aria-label="Global links">
+        <ul class="hl-topbar__list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/model">Model Dashboard</a></li>
+          <li><a href="/users">User Journeys</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- NHS Header — logo area -->
   <header class="nhsuk-header" role="banner">
     <div class="nhsuk-width-container nhsuk-header__container">
       <div class="nhsuk-header__logo">
@@ -25,39 +34,27 @@
         </a>
       </div>
     </div>
-
-    <div class="nhsuk-header__navigation-container">
-      <nav class="nhsuk-header__navigation" id="header-navigation" role="navigation" aria-label="Primary navigation">
-        <ul class="nhsuk-header__navigation-list">
-          <li class="nhsuk-header__navigation-item{% if active_page == 'home' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/">Home</a>
-          </li>
-          <li class="nhsuk-header__navigation-item">
-            <a class="nhsuk-header__navigation-link" href="/model">Model Dashboard</a>
-          </li>
-          <li class="nhsuk-header__navigation-item">
-            <a class="nhsuk-header__navigation-link" href="/users">User Journeys</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
   </header>
 
-  <!-- Breadcrumb -->
   {% block breadcrumb %}{% endblock %}
 
-  <!-- Main content -->
   <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent" role="main">
       {% block content %}{% endblock %}
     </main>
   </div>
 
-  <!-- NHS Footer -->
   <footer role="contentinfo">
     <div class="nhsuk-footer" id="nhsuk-footer">
       <div class="nhsuk-width-container">
-        <p class="nhsuk-footer__copyright">&copy; Crown copyright — HeartLink Pipeline Dashboard</p>
+        <h2 class="nhsuk-u-visually-hidden">Support links</h2>
+        <ul class="nhsuk-footer__list">
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="/model">Model Dashboard</a></li>
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="/users">User Journeys</a></li>
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="https://nhsengland.github.io/datascience/our_work/cvd_pathways/">CVD Pathways</a></li>
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="https://service-manual.nhs.uk">NHS Service Manual</a></li>
+        </ul>
+        <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
       </div>
     </div>
   </footer>

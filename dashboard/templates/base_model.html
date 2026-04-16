@@ -8,6 +8,20 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <!-- Top bar — global links -->
+  <div class="hl-topbar">
+    <div class="nhsuk-width-container">
+      <nav aria-label="Global links">
+        <ul class="hl-topbar__list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/model">Model Dashboard</a></li>
+          <li><a href="/users">User Journeys</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- NHS Header — logo area -->
   <header class="nhsuk-header" role="banner">
     <div class="nhsuk-width-container nhsuk-header__container">
       <div class="nhsuk-header__logo">
@@ -19,29 +33,21 @@
           <span class="nhsuk-header__service-name">HeartLink</span>
         </a>
       </div>
-      <p class="nhsuk-header__service-description">Prediction Model</p>
     </div>
 
-    <div class="nhsuk-header__navigation-container">
-      <nav class="nhsuk-header__navigation" id="header-navigation" role="navigation" aria-label="Model dashboard navigation">
-        <ul class="nhsuk-header__navigation-list">
-          <li class="nhsuk-header__navigation-item{% if active_page == 'model-home' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/model">Overview</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'eda' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/model/eda">EDA</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'classification' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/model/classification">Classification</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'regression' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/model/regression">Regression</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'clustering' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/model/clustering">Clustering</a>
-          </li>
-        </ul>
-      </nav>
+    <!-- Section nav — model pages -->
+    <div class="hl-section-nav">
+      <div class="nhsuk-width-container">
+        <nav aria-label="Model dashboard navigation">
+          <ul class="hl-section-nav__list">
+            <li{% if active_page == 'model-home' %} class="hl-section-nav__item--current"{% endif %}><a href="/model">Overview</a></li>
+            <li{% if active_page == 'eda' %} class="hl-section-nav__item--current"{% endif %}><a href="/model/eda">EDA</a></li>
+            <li{% if active_page == 'classification' %} class="hl-section-nav__item--current"{% endif %}><a href="/model/classification">Classification</a></li>
+            <li{% if active_page == 'regression' %} class="hl-section-nav__item--current"{% endif %}><a href="/model/regression">Regression</a></li>
+            <li{% if active_page == 'clustering' %} class="hl-section-nav__item--current"{% endif %}><a href="/model/clustering">Clustering</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -56,7 +62,13 @@
   <footer role="contentinfo">
     <div class="nhsuk-footer" id="nhsuk-footer">
       <div class="nhsuk-width-container">
-        <p class="nhsuk-footer__copyright">&copy; Crown copyright — HeartLink Pipeline Dashboard</p>
+        <h2 class="nhsuk-u-visually-hidden">Support links</h2>
+        <ul class="nhsuk-footer__list">
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="/">Home</a></li>
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="/users">User Journeys</a></li>
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="https://nhsengland.github.io/datascience/our_work/cvd_pathways/">CVD Pathways</a></li>
+        </ul>
+        <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
       </div>
     </div>
   </footer>

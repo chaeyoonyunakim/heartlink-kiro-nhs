@@ -8,6 +8,20 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  <!-- Top bar — global links -->
+  <div class="hl-topbar">
+    <div class="nhsuk-width-container">
+      <nav aria-label="Global links">
+        <ul class="hl-topbar__list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/model">Model Dashboard</a></li>
+          <li><a href="/users">User Journeys</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- NHS Header — logo area -->
   <header class="nhsuk-header" role="banner">
     <div class="nhsuk-width-container nhsuk-header__container">
       <div class="nhsuk-header__logo">
@@ -19,35 +33,23 @@
           <span class="nhsuk-header__service-name">HeartLink</span>
         </a>
       </div>
-      <p class="nhsuk-header__service-description">User Journeys</p>
     </div>
 
-    <div class="nhsuk-header__navigation-container">
-      <nav class="nhsuk-header__navigation" id="header-navigation" role="navigation" aria-label="User journeys navigation">
-        <ul class="nhsuk-header__navigation-list">
-          <li class="nhsuk-header__navigation-item{% if active_page == 'users-home' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/users">All Journeys</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'patient' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/users/patient">Patient</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'clinician' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/users/clinician">Clinician</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'clinical-lead' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/users/clinical-lead">Clinical Lead</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'radiographer' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/users/radiographer">Radiographer</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'pharmacist' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/users/pharmacist">Pharmacist</a>
-          </li>
-          <li class="nhsuk-header__navigation-item{% if active_page == 'workforce' %} nhsuk-header__navigation-item--current{% endif %}">
-            <a class="nhsuk-header__navigation-link" href="/users/workforce">Workforce</a>
-          </li>
-        </ul>
-      </nav>
+    <!-- Section nav — user journey pages -->
+    <div class="hl-section-nav">
+      <div class="nhsuk-width-container">
+        <nav aria-label="User journeys navigation">
+          <ul class="hl-section-nav__list">
+            <li{% if active_page == 'users-home' %} class="hl-section-nav__item--current"{% endif %}><a href="/users">All Journeys</a></li>
+            <li{% if active_page == 'patient' %} class="hl-section-nav__item--current"{% endif %}><a href="/users/patient">Patient</a></li>
+            <li{% if active_page == 'clinician' %} class="hl-section-nav__item--current"{% endif %}><a href="/users/clinician">Clinician</a></li>
+            <li{% if active_page == 'clinical-lead' %} class="hl-section-nav__item--current"{% endif %}><a href="/users/clinical-lead">Clinical Lead</a></li>
+            <li{% if active_page == 'radiographer' %} class="hl-section-nav__item--current"{% endif %}><a href="/users/radiographer">Radiographer</a></li>
+            <li{% if active_page == 'pharmacist' %} class="hl-section-nav__item--current"{% endif %}><a href="/users/pharmacist">Pharmacist</a></li>
+            <li{% if active_page == 'workforce' %} class="hl-section-nav__item--current"{% endif %}><a href="/users/workforce">Workforce</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -62,7 +64,13 @@
   <footer role="contentinfo">
     <div class="nhsuk-footer" id="nhsuk-footer">
       <div class="nhsuk-width-container">
-        <p class="nhsuk-footer__copyright">&copy; Crown copyright — HeartLink Pipeline Dashboard</p>
+        <h2 class="nhsuk-u-visually-hidden">Support links</h2>
+        <ul class="nhsuk-footer__list">
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="/">Home</a></li>
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="/model">Model Dashboard</a></li>
+          <li class="nhsuk-footer__list-item"><a class="nhsuk-footer__list-item-link" href="https://nhsengland.github.io/datascience/our_work/cvd_pathways/">CVD Pathways</a></li>
+        </ul>
+        <p class="nhsuk-footer__copyright">&copy; Crown copyright</p>
       </div>
     </div>
   </footer>
