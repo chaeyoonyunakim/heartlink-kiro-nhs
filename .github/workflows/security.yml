@@ -12,6 +12,7 @@ on:
 permissions:
   contents: read
   security-events: write
+  actions: read
 
 jobs:
   # ---------------------------------------------------------------
@@ -99,16 +100,27 @@ jobs:
   codeql:
     name: CodeQL analysis
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python]
     steps:
       - uses: actions/checkout@v4
 
       - name: Initialise CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: python
+          languages: ${{ matrix.language }}
+          queries: security-extended
 
       - name: Run CodeQL analysis
         uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
 
   # ---------------------------------------------------------------
   # 5. Data leak check — ensure no patient data in commits
