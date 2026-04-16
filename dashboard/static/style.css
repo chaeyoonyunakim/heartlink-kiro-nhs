@@ -126,11 +126,24 @@
 /* ---- Card spacing ---- */
 .nhsuk-card {
   margin-bottom: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ---- Responsive grid gap ---- */
+.nhsuk-card__content {
+  flex: 1;
+}
+
+/* ---- Equal-height card rows ---- */
 .nhsuk-grid-row {
   margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nhsuk-grid-row > [class*="nhsuk-grid-column"] {
+  display: flex;
 }
 
 
