@@ -1,3 +1,9 @@
+# Data folder — never push patient data or reference images
+data/
+
+# VS Code settings
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
