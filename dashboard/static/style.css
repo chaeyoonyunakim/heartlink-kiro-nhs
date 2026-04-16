@@ -14,33 +14,44 @@
  */
 
 /* ---- Header layout fix — prevent logo/service-name overlapping nav ---- */
+.nhsuk-header {
+  padding: 0;
+}
+
 .nhsuk-header__container {
-  position: relative;
-  padding-bottom: 0;
+  display: block;
+  padding: 16px 0;
+  overflow: visible;
+}
+
+.nhsuk-header__container::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .nhsuk-header__logo {
-  max-width: 100%;
+  float: none;
+  display: block;
+  position: relative;
 }
 
 .nhsuk-header__service-name {
   display: inline-block;
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   vertical-align: middle;
 }
 
 .nhsuk-header__navigation-container {
+  display: block;
   clear: both;
-  position: relative;
-  z-index: 1;
+  background: #002f5c;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .nhsuk-header__navigation {
   position: relative;
   width: 100%;
+  float: none;
 }
 
 .nhsuk-header__navigation-list {
@@ -53,12 +64,28 @@
 
 .nhsuk-header__navigation-item {
   border-top: none;
+  float: none;
 }
 
 .nhsuk-header__navigation-link {
   white-space: nowrap;
   font-size: 16px;
-  padding: 12px 14px;
+  padding: 12px 16px;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nhsuk-header__navigation-link:hover,
+.nhsuk-header__navigation-link:focus {
+  text-decoration: underline;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.nhsuk-header__navigation-item--current .nhsuk-header__navigation-link {
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* ---- Plot images ---- */
@@ -181,6 +208,15 @@
 
 /* ---- Responsive nav overflow ---- */
 @media (max-width: 768px) {
+  .nhsuk-header__navigation-list {
+    flex-wrap: wrap;
+  }
+
+  .nhsuk-header__navigation-link {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
   .nhsuk-navigation-container .nhsuk-header__navigation-list {
     flex-wrap: wrap;
   }
