@@ -23,12 +23,12 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
     - Print class distribution, drop original `num` column, return (features_df, target_series)
     - _Requirements: 2.1, 2.2, 2.3_
 
-  - [ ]* 2.3 Write property test for binarisation correctness (Property 1)
+  - [x] 2.3 Write property test for binarisation correctness (Property 1)
     - **Property 1: Binarisation correctness and completeness**
     - Use Hypothesis to generate DataFrames with `num` values in {0,1,2,3,4} and verify every `Target_Variable` value is in {0,1}, original 0 maps to 0, values 1–4 map to 1, and `num` is absent from the returned DataFrame
     - **Validates: Requirements 2.1, 2.3, 2.4**
 
-  - [ ]* 2.4 Write unit tests for data loading
+  - [x] 2.4 Write unit tests for data loading
     - Test successful load with correct shape and columns
     - Test `FileNotFoundError` on missing file
     - Test `ValueError` on incorrect column schema
@@ -41,7 +41,7 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
     - Use `[EDA]` prefix for all print statements
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
 
-  - [ ]* 3.2 Write unit tests for EDA outputs
+  - [x] 3.2 Write unit tests for EDA outputs
     - Verify all expected PNG files are created in the output directory
     - _Requirements: 3.3, 3.4, 3.5, 3.6_
 
@@ -57,27 +57,27 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
     - Return transformed array and feature names
     - _Requirements: 4.1, 4.4, 4.5, 4.6, 4.7, 4.8_
 
-  - [ ]* 4.3 Write property test for clinical guardrails (Property 2)
+  - [x] 4.3 Write property test for clinical guardrails (Property 2)
     - **Property 2: Clinical guardrails replace biologically impossible values**
     - Use Hypothesis to generate DataFrames with zero and non-zero values in `trestbps`/`chol`; verify all zeroes become NaN and non-zero values are unchanged
     - **Validates: Requirements 4.2, 8.2**
 
-  - [ ]* 4.4 Write property test for imputation completeness (Property 3)
+  - [x] 4.4 Write property test for imputation completeness (Property 3)
     - **Property 3: Imputation completeness**
     - Use Hypothesis to generate DataFrames with random NaN placement in numerical and categorical columns; verify no NaN values remain after imputation
     - **Validates: Requirements 4.4, 4.5, 9.4**
 
-  - [ ]* 4.5 Write property test for one-hot encoding column count (Property 4)
+  - [x] 4.5 Write property test for one-hot encoding column count (Property 4)
     - **Property 4: One-hot encoding produces correct column count**
     - Use Hypothesis to generate categorical columns with varying cardinality; verify output column count equals sum of (unique categories − 1) per column
     - **Validates: Requirements 4.6, 9.5**
 
-  - [ ]* 4.6 Write property test for standardisation (Property 5)
+  - [x] 4.6 Write property test for standardisation (Property 5)
     - **Property 5: Standardisation produces zero mean and unit variance**
     - Use Hypothesis to generate numerical arrays with at least two distinct values; verify transformed mean ≈ 0 and std ≈ 1 (within 1e-7)
     - **Validates: Requirements 4.7, 9.5**
 
-  - [ ]* 4.7 Write property test for column exclusion (Property 8)
+  - [x] 4.7 Write property test for column exclusion (Property 8)
     - **Property 8: Non-predictive and high-missingness columns are excluded**
     - Verify `id` and `dataset` are absent after classification preprocessing; verify `id`, `dataset`, `ca`, `thal`, `slope` are absent after clustering preprocessing
     - **Validates: Requirements 4.1, 9.1**
@@ -100,17 +100,17 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
     - Save confusion matrix PNG, ROC curve PNG, and classification report text file to `outputs/`
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6_
 
-  - [ ]* 6.4 Write property test for split proportions (Property 6)
+  - [x] 6.4 Write property test for split proportions (Property 6)
     - **Property 6: Train-test split preserves data and respects proportions**
     - Use Hypothesis to generate datasets of varying sizes (5–1000); verify training + testing sizes sum to n and testing size ≈ round(n × 0.2) within ±1
     - **Validates: Requirements 5.1, 8.5**
 
-  - [ ]* 6.5 Write property test for stratified class proportions (Property 7)
+  - [x] 6.5 Write property test for stratified class proportions (Property 7)
     - **Property 7: Stratified split preserves class proportions**
     - Use Hypothesis to generate binary targets with varying class ratios; verify class 1 proportion in train and test sets is within 0.05 of the original proportion
     - **Validates: Requirements 5.3**
 
-  - [ ]* 6.6 Write unit tests for classification evaluation
+  - [x] 6.6 Write unit tests for classification evaluation
     - Verify confusion matrix, ROC curve, and classification report files are created
     - Verify metrics dictionary contains expected keys
     - _Requirements: 7.4, 7.5, 7.6_
@@ -128,12 +128,12 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
     - Save comparison CSV, predicted-vs-actual scatter plot, and residual plot for the best variant to `outputs/`
     - _Requirements: 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 8.10, 8.11, 8.12_
 
-  - [ ]* 7.3 Write property test for best variant selection (Property 12)
+  - [x] 7.3 Write property test for best variant selection (Property 12)
     - **Property 12: Best regression variant has maximum R²**
     - Use Hypothesis to generate lists of 8 random R² values; verify the selected best variant has R² ≥ every other variant's R²
     - **Validates: Requirements 8.9**
 
-  - [ ]* 7.4 Write unit tests for regression analysis
+  - [x] 7.4 Write unit tests for regression analysis
     - Verify exactly 8 variants are generated
     - Verify comparison CSV has 8 rows
     - Verify scatter and residual plot PNGs are saved
@@ -159,27 +159,27 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
     - Save elbow plot (inertia vs k) and 2D cluster scatter plot (first two PCA components) to `outputs/`
     - _Requirements: 9.8, 9.9, 9.10, 9.11, 9.12, 9.13_
 
-  - [ ]* 9.3 Write property test for row missingness filter (Property 9)
+  - [x] 9.3 Write property test for row missingness filter (Property 9)
     - **Property 9: Clustering row filter removes high-missingness rows**
     - Use Hypothesis to generate DataFrames with random NaN patterns; verify no remaining row has >30% missing values
     - **Validates: Requirements 9.2**
 
-  - [ ]* 9.4 Write property test for cholesterol imputation (Property 10)
+  - [x] 9.4 Write property test for cholesterol imputation (Property 10)
     - **Property 10: Cholesterol sex-and-age-group median imputation**
     - Use Hypothesis to generate DataFrames with known sex/age groups and missing `chol`; verify no NaN remains in `chol` and each imputed value equals the group median
     - **Validates: Requirements 9.3**
 
-  - [ ]* 9.5 Write property test for PCA variance retention (Property 11)
+  - [x] 9.5 Write property test for PCA variance retention (Property 11)
     - **Property 11: PCA retains at least 90% of variance**
     - Use Hypothesis to generate random standardised matrices; verify cumulative explained variance ratio ≥ 0.90
     - **Validates: Requirements 9.6**
 
-  - [ ]* 9.6 Write property test for optimal k selection (Property 13)
+  - [x] 9.6 Write property test for optimal k selection (Property 13)
     - **Property 13: Optimal k has maximum silhouette score**
     - Use Hypothesis to generate lists of 7 random silhouette scores (k = 2..8); verify the selected k corresponds to the highest score
     - **Validates: Requirements 9.9**
 
-  - [ ]* 9.7 Write unit tests for clustering analysis
+  - [x] 9.7 Write unit tests for clustering analysis
     - Verify elbow and scatter plot PNGs are saved
     - Verify cluster summary is printed
     - _Requirements: 9.11, 9.12, 9.13_
@@ -193,12 +193,12 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
     - Add `if __name__ == "__main__": main()` guard
     - _Requirements: 10.1, 10.2, 10.3, 10.4_
 
-  - [ ]* 10.2 Write property test for pipeline idempotence (Property 14)
+  - [x] 10.2 Write property test for pipeline idempotence (Property 14)
     - **Property 14: Pipeline idempotence**
     - Run the full pipeline twice on the same input CSV with seed 42; verify identical classification metrics, regression metrics, and clustering results
     - **Validates: Requirements 5.2, 6.2, 10.5**
 
-  - [ ]* 10.3 Write end-to-end smoke test
+  - [x] 10.3 Write end-to-end smoke test
     - Run `python src/pipeline.py` and verify exit code 0 and all expected output files exist in `outputs/`
     - _Requirements: 10.1, 10.4_
 
