@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "base_users.html" %}
 {% block title %}Patient Screening{% endblock %}
 
 {% block breadcrumb %}
 <nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
   <div class="nhsuk-width-container">
     <ol class="nhsuk-breadcrumb__list">
-      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Home</a></li>
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/users">User Journeys</a></li>
       <li class="nhsuk-breadcrumb__item">Patient Screening</li>
     </ol>
   </div>
@@ -53,7 +53,7 @@
 </div>
 {% endif %}
 
-<form method="POST" action="/patient" novalidate>
+<form method="POST" action="/users/patient" novalidate>
   <fieldset class="nhsuk-fieldset">
     <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
       <h2 class="nhsuk-fieldset__heading">Your health information</h2>

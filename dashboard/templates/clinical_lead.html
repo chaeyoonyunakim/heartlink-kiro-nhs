@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "base_users.html" %}
 {% block title %}Clinical Lead{% endblock %}
 
 {% block breadcrumb %}
 <nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
   <div class="nhsuk-width-container">
     <ol class="nhsuk-breadcrumb__list">
-      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Home</a></li>
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/users">User Journeys</a></li>
       <li class="nhsuk-breadcrumb__item">Clinical Lead</li>
     </ol>
   </div>
@@ -159,7 +159,7 @@
       <div class="nhsuk-card__content">
         <h3 class="nhsuk-card__heading">Full Classification Report</h3>
         <pre class="dashboard-report">{{ report }}</pre>
-        <a class="nhsuk-button nhsuk-button--secondary" href="/classification">View full classification analysis</a>
+        <a class="nhsuk-button nhsuk-button--secondary" href="/model/classification">View full classification analysis</a>
       </div>
     </div>
   </div>

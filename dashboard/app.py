@@ -78,28 +78,42 @@ def _get_available_plots() -> dict[str, list[str]]:
     return groups
 
 
+# ---------------------------------------------------------------------------
+# Landing page
+# ---------------------------------------------------------------------------
+
 @app.route("/")
 def index():
-    """Dashboard home — overview with key metrics."""
+    """Landing page — choose between model dashboard and user journeys."""
+    return render_template("index.html")
+
+
+# ---------------------------------------------------------------------------
+# Model dashboard routes (extend base_model.html)
+# ---------------------------------------------------------------------------
+
+@app.route("/model")
+def model_index():
+    """Model overview — key metrics, plots, regression table."""
     plots = _get_available_plots()
     report = _read_classification_report()
     variants = _read_regression_csv()
     return render_template(
-        "index.html",
+        "model_index.html",
         plots=plots,
         report=report,
         variants=variants,
     )
 
 
-@app.route("/eda")
+@app.route("/model/eda")
 def eda():
     """Exploratory Data Analysis page."""
     plots = _get_available_plots()
     return render_template("eda.html", plots=plots.get("eda", []))
 
 
-@app.route("/classification")
+@app.route("/model/classification")
 def classification():
     """Classification results page."""
     plots = _get_available_plots()
@@ -111,7 +125,7 @@ def classification():
     )
 
 
-@app.route("/regression")
+@app.route("/model/regression")
 def regression():
     """Regression analysis page."""
     plots = _get_available_plots()
@@ -123,7 +137,7 @@ def regression():
     )
 
 
-@app.route("/clustering")
+@app.route("/model/clustering")
 def clustering():
     """Clustering analysis page."""
     plots = _get_available_plots()
@@ -133,6 +147,10 @@ def clustering():
     )
 
 
+# ---------------------------------------------------------------------------
+# Static file serving
+# ---------------------------------------------------------------------------
+
 @app.route("/outputs/<path:filename>")
 def serve_output(filename):
     """Serve files from the pipeline outputs/ directory."""
@@ -140,10 +158,16 @@ def serve_output(filename):
 
 
 # ---------------------------------------------------------------------------
-# User persona routes
+# User journeys routes (extend base_users.html)
 # ---------------------------------------------------------------------------
 
-@app.route("/patient", methods=["GET", "POST"])
+@app.route("/users")
+def users_index():
+    """User journeys landing page."""
+    return render_template("users_index.html")
+
+
+@app.route("/users/patient", methods=["GET", "POST"])
 def patient():
     """Patient screening form — enter vitals, get risk assessment."""
     result = None
@@ -218,27 +242,27 @@ def patient():
     return render_template("patient.html", result=result, active_page="patient")
 
 
-@app.route("/clinician")
+@app.route("/users/clinician")
 def clinician():
     """Clinician triage dashboard — mock patient case with data quality flags."""
     report = _read_classification_report()
     return render_template("clinician.html", report=report, active_page="clinician")
 
 
-@app.route("/clinical-lead")
+@app.route("/users/clinical-lead")
 def clinical_lead():
     """Clinical Lead — service performance overview with real pipeline metrics."""
     report = _read_classification_report()
     return render_template("clinical_lead.html", report=report, active_page="clinical-lead")
 
 
-@app.route("/radiographer")
+@app.route("/users/radiographer")
 def radiographer():
     """Radiographer — data quality feedback for high-missingness variables."""
     return render_template("radiographer.html", active_page="radiographer")
 
 
-@app.route("/pharmacist", methods=["GET", "POST"])
+@app.route("/users/pharmacist", methods=["GET", "POST"])
 def pharmacist():
     """Pharmacist — NHS BP monitoring service with NICE NG136 staging."""
     result = None
@@ -322,7 +346,7 @@ def pharmacist():
     return render_template("pharmacist.html", result=result, active_page="pharmacist")
 
 
-@app.route("/workforce")
+@app.route("/users/workforce")
 def workforce():
     """Workforce Leader — strategic overview of screening capacity and training needs."""
     return render_template("workforce.html", active_page="workforce")
