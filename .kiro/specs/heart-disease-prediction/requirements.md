@@ -230,7 +230,41 @@ Responsible for implementing the Ten Year Health Workforce Plan, they must ensur
 12. WHEN the Clustering_Model is trained, THE Pipeline SHALL save a 2D scatter plot of the clusters (using the first two principal components from PCA) as a PNG file in the `outputs/` directory
 13. WHEN the Clustering_Model is trained, THE Pipeline SHALL print a summary table showing the mean values of each feature per cluster to standard output
 
-### Requirement 10: End-to-End Reproducibility
+### Requirement 10: Visualisation Style Consistency
+
+**User Story:** As a clinical lead reviewing pipeline outputs, I want all visualisations to follow a consistent, professional style matching the project's reference imagery, so that outputs are presentation-ready and visually coherent across all pipeline stages.
+
+#### Acceptance Criteria — Global Style
+
+1. THE Pipeline SHALL apply a consistent matplotlib style across all plots using a white background, `figure.facecolor` set to white, and `axes.facecolor` set to white
+2. THE Pipeline SHALL use a standard figure width of 8 inches (800px at 100 DPI) for all single-panel plots, matching the reference image dimensions
+3. THE Pipeline SHALL save all PNG files at 100 DPI to match the reference image resolution
+4. THE Pipeline SHALL use a consistent colour palette across all plots: teal/blue (`#2080C0`) as the primary colour, dark navy (`#002060`) as the secondary colour, and red (`#E00000`) for emphasis or negative indicators
+
+#### Acceptance Criteria — EDA Enhancements
+
+5. WHEN the EDA stage runs, THE Pipeline SHALL save distribution bar charts for each Categorical_Feature (cp, ca, thal, slope, dataset) as PNG files in the `outputs/` directory
+6. WHEN the EDA stage runs, THE Pipeline SHALL save a cholesterol distribution plot grouped by Target_Variable as a PNG file (`target_chol.png`) in the `outputs/` directory
+
+#### Acceptance Criteria — Classification Enhancements
+
+7. WHEN the Classification_Model is evaluated, THE Pipeline SHALL save a top-10 feature importance horizontal bar chart as a PNG file (`feature_importance.png`) in the `outputs/` directory, using a viridis-like gradient colour scheme
+8. WHEN the Classification_Model is evaluated, THE Pipeline SHALL save a classifier performance summary bar chart comparing accuracy, precision, recall, F1, and AUC-ROC as a PNG file (`classifier_performance.png`) in the `outputs/` directory
+9. WHEN the ROC curve is plotted, THE Pipeline SHALL use a red line for the ROC curve and a grey dashed line for the diagonal reference
+
+#### Acceptance Criteria — Regression Enhancements
+
+10. WHEN the regression analysis completes, THE Pipeline SHALL save an R² comparison bar chart across all 8 variants as a PNG file (`regression_r2_comparison.png`) in the `outputs/` directory
+
+#### Acceptance Criteria — Clustering Enhancements
+
+11. WHEN the clustering analysis completes, THE Pipeline SHALL use distinct, high-contrast colours (red, green, blue) for cluster scatter plot markers, matching the reference PCA scatter style
+
+#### Acceptance Criteria — Heatmap Style
+
+12. WHEN the correlation heatmap is plotted, THE Pipeline SHALL use a sequential warm colormap (e.g., `Reds` or `YlOrRd`) to match the reference heatmap style, replacing the current `coolwarm` colormap
+
+### Requirement 11: End-to-End Reproducibility
 
 **User Story:** As a data scientist, I want the entire pipeline to be executable in a single command, so that anyone can reproduce the results from CSV to outputs.
 

@@ -42,7 +42,8 @@ class TestClassificationEvaluationOutputs:
     def _run_evaluation(self, trained_classifier_artifacts):
         model, X_test, y_test, output_dir = trained_classifier_artifacts
         self.output_dir = output_dir
-        self.metrics = evaluate_classifier(model, X_test, y_test, output_dir)
+        feature_names = [f"feature_{i}" for i in range(X_test.shape[1])]
+        self.metrics = evaluate_classifier(model, X_test, y_test, output_dir, feature_names=feature_names)
 
     def test_confusion_matrix_created(self):
         """Requirement 7.4 — confusion matrix PNG is saved."""
@@ -68,3 +69,11 @@ class TestClassificationEvaluationOutputs:
         for key, value in self.metrics.items():
             assert isinstance(value, float), f"{key} is not a float"
             assert 0.0 <= value <= 1.0, f"{key}={value} is out of [0, 1]"
+
+    def test_feature_importance_created(self):
+        """Requirement 10.7 — feature importance PNG is saved."""
+        assert os.path.isfile(os.path.join(self.output_dir, "feature_importance.png"))
+
+    def test_classifier_performance_created(self):
+        """Requirement 10.8 — classifier performance summary PNG is saved."""
+        assert os.path.isfile(os.path.join(self.output_dir, "classifier_performance.png"))

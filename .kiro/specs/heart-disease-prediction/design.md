@@ -252,14 +252,59 @@ K_RANGE: range = range(2, 9)             # Evaluate k from 2 to 8
 | `outputs/target_distribution.png`           | EDA            | PNG    |
 | `outputs/distribution_*.png`                | EDA            | PNG    |
 | `outputs/boxplot_*.png`                     | EDA            | PNG    |
+| `outputs/cat_distribution_*.png`            | EDA            | PNG    |
+| `outputs/target_chol.png`                   | EDA            | PNG    |
 | `outputs/confusion_matrix.png`              | Classification | PNG    |
 | `outputs/roc_curve.png`                     | Classification | PNG    |
 | `outputs/classification_report.txt`         | Classification | TXT    |
+| `outputs/feature_importance.png`            | Classification | PNG    |
+| `outputs/classifier_performance.png`        | Classification | PNG    |
 | `outputs/regression_variant_comparison.csv` | Regression     | CSV    |
 | `outputs/regression_scatter.png`            | Regression     | PNG    |
 | `outputs/regression_residuals.png`          | Regression     | PNG    |
+| `outputs/regression_r2_comparison.png`      | Regression     | PNG    |
 | `outputs/clustering_elbow.png`              | Clustering     | PNG    |
 | `outputs/clustering_scatter.png`            | Clustering     | PNG    |
+
+### Visualisation Style Guide
+
+All plots follow a consistent style derived from the project's reference imagery in `data/`:
+
+#### Global Settings
+
+```python
+PLOT_STYLE = {
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+    "savefig.dpi": 100,
+    "figure.dpi": 100,
+}
+PLOT_WIDTH = 8          # inches (800px at 100 DPI)
+PLOT_DPI = 100
+PRIMARY_COLOR = "#2080C0"    # teal/blue
+SECONDARY_COLOR = "#002060"  # dark navy
+ACCENT_COLOR = "#E00000"     # red for emphasis
+```
+
+#### Per-Plot Specifications
+
+| Plot                     | Colormap / Palette                          | Size (inches) |
+|--------------------------|---------------------------------------------|---------------|
+| Correlation heatmap      | `YlOrRd` (warm sequential)                  | 8 × 6         |
+| Target distribution      | `[PRIMARY_COLOR, ACCENT_COLOR]`             | 8 × 5         |
+| Distribution histograms  | `PRIMARY_COLOR` fill                        | 8 × 5         |
+| Boxplots                 | seaborn default with white bg               | 12 × 5        |
+| Categorical distributions| `PRIMARY_COLOR` bars                        | 8 × 5         |
+| Target vs cholesterol    | `[PRIMARY_COLOR, ACCENT_COLOR]` by target   | 8 × 5         |
+| Confusion matrix         | `Blues` (sequential blue)                   | 6 × 5         |
+| ROC curve                | `ACCENT_COLOR` line, grey dashed diagonal   | 6 × 5         |
+| Feature importance       | `viridis` gradient                          | 8 × 6         |
+| Classifier performance   | `PRIMARY_COLOR` bars                        | 8 × 5         |
+| Regression scatter       | `PRIMARY_COLOR` markers, red ideal line     | 7 × 7         |
+| Regression residuals     | `PRIMARY_COLOR` markers, red zero line      | 7 × 5         |
+| R² comparison            | `viridis` gradient bars                     | 8 × 5         |
+| Clustering elbow         | `PRIMARY_COLOR` line with markers           | 8 × 5         |
+| Clustering scatter       | Distinct cluster colours (tab10)            | 8 × 6         |
 
 
 ## Correctness Properties

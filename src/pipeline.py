@@ -106,6 +106,22 @@ OUTPUT_DIR: str = "outputs"
 #: Global random seed for reproducibility.
 RANDOM_SEED: int = 42
 
+# ---------------------------------------------------------------------------
+# Visualisation Style Constants (matching reference imagery in data/)
+# ---------------------------------------------------------------------------
+
+#: Standard figure DPI matching reference images.
+PLOT_DPI: int = 100
+
+#: Primary colour — teal/blue used for most plot elements.
+PRIMARY_COLOR: str = "#2080C0"
+
+#: Secondary colour — dark navy for secondary elements.
+SECONDARY_COLOR: str = "#002060"
+
+#: Accent colour — red for emphasis, negative indicators, ROC curves.
+ACCENT_COLOR: str = "#E00000"
+
 
 # ---------------------------------------------------------------------------
 # Helper — ensure outputs directory exists
@@ -241,35 +257,35 @@ def run_eda(
     print(missing)
 
     # --- Correlation heatmap ------------------------------------------------
-    fig, ax = plt.subplots(figsize=(10, 8))
+    fig, ax = plt.subplots(figsize=(8, 6))
     corr = df[numerical_cols].corr()
-    sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
+    sns.heatmap(corr, annot=True, fmt=".2f", cmap="YlOrRd", ax=ax)
     ax.set_title("Correlation Heatmap — Numerical Features")
     fig.tight_layout()
-    fig.savefig(os.path.join(output_dir, "correlation_heatmap.png"))
+    fig.savefig(os.path.join(output_dir, "correlation_heatmap.png"), dpi=PLOT_DPI)
     plt.close(fig)
 
     # --- Target distribution bar chart --------------------------------------
-    fig, ax = plt.subplots(figsize=(6, 4))
-    target.value_counts().sort_index().plot(kind="bar", ax=ax, color=["#2196F3", "#F44336"])
+    fig, ax = plt.subplots(figsize=(8, 5))
+    target.value_counts().sort_index().plot(kind="bar", ax=ax, color=[PRIMARY_COLOR, ACCENT_COLOR])
     ax.set_xlabel("Target Variable")
     ax.set_ylabel("Count")
     ax.set_title("Target Variable Distribution")
     ax.set_xticks([0, 1])
     ax.set_xticklabels(["No Disease (0)", "Disease (1)"], rotation=0)
     fig.tight_layout()
-    fig.savefig(os.path.join(output_dir, "target_distribution.png"))
+    fig.savefig(os.path.join(output_dir, "target_distribution.png"), dpi=PLOT_DPI)
     plt.close(fig)
 
     # --- Distribution histograms per numerical feature ----------------------
     for col in numerical_cols:
-        fig, ax = plt.subplots(figsize=(6, 4))
-        df[col].dropna().hist(bins=30, ax=ax, edgecolor="black")
+        fig, ax = plt.subplots(figsize=(8, 5))
+        df[col].dropna().hist(bins=30, ax=ax, edgecolor="black", color=PRIMARY_COLOR)
         ax.set_xlabel(col)
         ax.set_ylabel("Frequency")
         ax.set_title(f"Distribution of {col}")
         fig.tight_layout()
-        fig.savefig(os.path.join(output_dir, f"distribution_{col}.png"))
+        fig.savefig(os.path.join(output_dir, f"distribution_{col}.png"), dpi=PLOT_DPI)
         plt.close(fig)
 
     # --- Boxplots per numerical feature by sex and Target_Variable ----------
@@ -293,8 +309,35 @@ def run_eda(
 
         fig.suptitle(f"Boxplots — {col}", y=1.02)
         fig.tight_layout()
-        fig.savefig(os.path.join(output_dir, f"boxplot_{col}.png"))
+        fig.savefig(os.path.join(output_dir, f"boxplot_{col}.png"), dpi=PLOT_DPI)
         plt.close(fig)
+
+    # --- Categorical feature distribution bar charts ---------------------------
+    cat_cols = ["cp", "ca", "thal", "slope", "dataset"]
+    for col in cat_cols:
+        if col in df.columns:
+            fig, ax = plt.subplots(figsize=(8, 5))
+            df[col].value_counts().sort_index().plot(kind="bar", ax=ax, color=PRIMARY_COLOR, edgecolor="black")
+            ax.set_xlabel(col)
+            ax.set_ylabel("Count")
+            ax.set_title(f"Distribution of {col}")
+            fig.tight_layout()
+            fig.savefig(os.path.join(output_dir, f"cat_distribution_{col}.png"), dpi=PLOT_DPI)
+            plt.close(fig)
+
+    # --- Cholesterol distribution by Target_Variable ---------------------------
+    fig, ax = plt.subplots(figsize=(8, 5))
+    for label, color in [(0, PRIMARY_COLOR), (1, ACCENT_COLOR)]:
+        subset = df.loc[target == label, "chol"].dropna()
+        ax.hist(subset, bins=30, alpha=0.6, color=color, edgecolor="black",
+                label=f"Target = {label}")
+    ax.set_xlabel("Cholesterol (mg/dl)")
+    ax.set_ylabel("Frequency")
+    ax.set_title("Cholesterol Distribution by Target Variable")
+    ax.legend()
+    fig.tight_layout()
+    fig.savefig(os.path.join(output_dir, "target_chol.png"), dpi=PLOT_DPI)
+    plt.close(fig)
 
     print(f"\n[EDA] All EDA plots saved to {output_dir}/")
 
@@ -493,6 +536,7 @@ def evaluate_classifier(
     X_test: np.ndarray,
     y_test: pd.Series,
     output_dir: str = OUTPUT_DIR,
+    feature_names: list[str] = None,
 ) -> dict[str, float]:
     """Evaluate the classifier and save diagnostic outputs.
 
@@ -548,20 +592,20 @@ def evaluate_classifier(
     ax.set_ylabel("Actual")
     ax.set_title("Confusion Matrix")
     fig.tight_layout()
-    fig.savefig(os.path.join(output_dir, "confusion_matrix.png"))
+    fig.savefig(os.path.join(output_dir, "confusion_matrix.png"), dpi=PLOT_DPI)
     plt.close(fig)
 
     # --- ROC curve ----------------------------------------------------------
     fpr, tpr, _ = roc_curve(y_test, y_proba)
     fig, ax = plt.subplots(figsize=(6, 5))
-    ax.plot(fpr, tpr, label=f"AUC = {metrics['auc_roc']:.4f}")
+    ax.plot(fpr, tpr, color=ACCENT_COLOR, label=f"AUC = {metrics['auc_roc']:.4f}")
     ax.plot([0, 1], [0, 1], linestyle="--", color="grey")
     ax.set_xlabel("False Positive Rate")
     ax.set_ylabel("True Positive Rate")
     ax.set_title("ROC Curve")
     ax.legend(loc="lower right")
     fig.tight_layout()
-    fig.savefig(os.path.join(output_dir, "roc_curve.png"))
+    fig.savefig(os.path.join(output_dir, "roc_curve.png"), dpi=PLOT_DPI)
     plt.close(fig)
 
     # --- Classification report text file ------------------------------------
@@ -574,6 +618,35 @@ def evaluate_classifier(
     print(f"[CLASSIFICATION] Confusion matrix saved to {output_dir}/confusion_matrix.png")
     print(f"[CLASSIFICATION] ROC curve saved to {output_dir}/roc_curve.png")
     print(f"[CLASSIFICATION] Classification report saved to {report_path}")
+
+    # --- Top-10 feature importance bar chart -----------------------------------
+    if feature_names is not None:
+        importances = model.feature_importances_
+        indices = np.argsort(importances)[-10:]
+        fig, ax = plt.subplots(figsize=(8, 6))
+        colors = plt.cm.viridis(np.linspace(0.2, 0.8, len(indices)))
+        ax.barh(range(len(indices)), importances[indices], color=colors)
+        ax.set_yticks(range(len(indices)))
+        ax.set_yticklabels([feature_names[i] for i in indices])
+        ax.set_xlabel("Feature Importance")
+        ax.set_title("Top 10 Feature Importances")
+        fig.tight_layout()
+        fig.savefig(os.path.join(output_dir, "feature_importance.png"), dpi=PLOT_DPI)
+        plt.close(fig)
+
+    # --- Classifier performance summary bar chart ------------------------------
+    metric_names = list(metrics.keys())
+    metric_values = list(metrics.values())
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.bar(metric_names, metric_values, color=PRIMARY_COLOR, edgecolor="black")
+    ax.set_ylabel("Score")
+    ax.set_title("Classifier Performance Summary")
+    ax.set_ylim(0, 1.05)
+    for i, v in enumerate(metric_values):
+        ax.text(i, v + 0.02, f"{v:.3f}", ha="center", fontsize=9)
+    fig.tight_layout()
+    fig.savefig(os.path.join(output_dir, "classifier_performance.png"), dpi=PLOT_DPI)
+    plt.close(fig)
 
     return metrics
 
@@ -794,8 +867,9 @@ def train_and_evaluate_regression(
 
     # --- Predicted-vs-actual scatter plot (best variant) --------------------
     if best_y_test is not None and best_y_pred is not None:
-        fig, ax = plt.subplots(figsize=(6, 6))
-        ax.scatter(best_y_test, best_y_pred, alpha=0.6, edgecolors="k", linewidths=0.5)
+        fig, ax = plt.subplots(figsize=(7, 7))
+        ax.scatter(best_y_test, best_y_pred, alpha=0.6, edgecolors="k", linewidths=0.5,
+                   color=PRIMARY_COLOR)
         min_val = min(best_y_test.min(), best_y_pred.min())
         max_val = max(best_y_test.max(), best_y_pred.max())
         ax.plot([min_val, max_val], [min_val, max_val], "r--", label="Ideal")
@@ -804,22 +878,43 @@ def train_and_evaluate_regression(
         ax.set_title(f"Predicted vs Actual — {best_variant_label}")
         ax.legend()
         fig.tight_layout()
-        fig.savefig(os.path.join(output_dir, "regression_scatter.png"))
+        fig.savefig(os.path.join(output_dir, "regression_scatter.png"), dpi=PLOT_DPI)
         plt.close(fig)
         print(f"[REGRESSION] Scatter plot saved to {output_dir}/regression_scatter.png")
 
         # --- Residual plot (best variant) -----------------------------------
         residuals = best_y_test - best_y_pred
-        fig, ax = plt.subplots(figsize=(6, 5))
-        ax.scatter(best_y_pred, residuals, alpha=0.6, edgecolors="k", linewidths=0.5)
+        fig, ax = plt.subplots(figsize=(7, 5))
+        ax.scatter(best_y_pred, residuals, alpha=0.6, edgecolors="k", linewidths=0.5,
+                   color=PRIMARY_COLOR)
         ax.axhline(y=0, color="r", linestyle="--")
         ax.set_xlabel("Predicted thalch")
         ax.set_ylabel("Residuals")
         ax.set_title(f"Residual Plot — {best_variant_label}")
         fig.tight_layout()
-        fig.savefig(os.path.join(output_dir, "regression_residuals.png"))
+        fig.savefig(os.path.join(output_dir, "regression_residuals.png"), dpi=PLOT_DPI)
         plt.close(fig)
         print(f"[REGRESSION] Residual plot saved to {output_dir}/regression_residuals.png")
+
+    # --- R² comparison bar chart across all variants ---------------------------
+    if len(results) > 0:
+        labels = [r["variant_label"] for r in results]
+        r2_values = [r["R2"] for r in results]
+        colors = plt.cm.viridis(np.linspace(0.2, 0.8, len(labels)))
+        # Highlight best variant
+        best_idx = np.argmax(r2_values)
+        edge_colors = ["red" if i == best_idx else "black" for i in range(len(labels))]
+        edge_widths = [2 if i == best_idx else 0.5 for i in range(len(labels))]
+
+        fig, ax = plt.subplots(figsize=(8, 5))
+        bars = ax.bar(range(len(labels)), r2_values, color=colors, edgecolor=edge_colors, linewidth=edge_widths)
+        ax.set_xticks(range(len(labels)))
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=8)
+        ax.set_ylabel("R² Score")
+        ax.set_title("R² Comparison Across Regression Variants")
+        fig.tight_layout()
+        fig.savefig(os.path.join(output_dir, "regression_r2_comparison.png"), dpi=PLOT_DPI)
+        plt.close(fig)
 
     return comparison_df
 
@@ -1000,15 +1095,15 @@ def run_clustering_analysis(
     print(cluster_means.to_string())
 
     # --- Save elbow plot (inertia vs k) -------------------------------------
-    fig, ax = plt.subplots(figsize=(7, 5))
+    fig, ax = plt.subplots(figsize=(8, 5))
     ks = sorted(inertias.keys())
-    ax.plot(ks, [inertias[k] for k in ks], "bo-")
+    ax.plot(ks, [inertias[k] for k in ks], color=PRIMARY_COLOR, marker="o")
     ax.set_xlabel("Number of Clusters (k)")
     ax.set_ylabel("Inertia")
     ax.set_title("Elbow Plot — KMeans Inertia vs k")
     ax.set_xticks(ks)
     fig.tight_layout()
-    fig.savefig(os.path.join(output_dir, "clustering_elbow.png"))
+    fig.savefig(os.path.join(output_dir, "clustering_elbow.png"), dpi=PLOT_DPI)
     plt.close(fig)
     print(f"[CLUSTERING] Elbow plot saved to {output_dir}/clustering_elbow.png")
 
@@ -1018,7 +1113,7 @@ def run_clustering_analysis(
         X_pca[:, 0],
         X_pca[:, 1],
         c=cluster_labels,
-        cmap="viridis",
+        cmap="tab10",
         alpha=0.6,
         edgecolors="k",
         linewidths=0.3,
@@ -1028,7 +1123,7 @@ def run_clustering_analysis(
     ax.set_title(f"KMeans Clustering (k = {optimal_k}) — First Two PCA Components")
     fig.colorbar(scatter, ax=ax, label="Cluster")
     fig.tight_layout()
-    fig.savefig(os.path.join(output_dir, "clustering_scatter.png"))
+    fig.savefig(os.path.join(output_dir, "clustering_scatter.png"), dpi=PLOT_DPI)
     plt.close(fig)
     print(f"[CLUSTERING] Scatter plot saved to {output_dir}/clustering_scatter.png")
 
@@ -1060,6 +1155,16 @@ def main() -> None:
     np.random.seed(RANDOM_SEED)
     random.seed(RANDOM_SEED)
 
+    # --- Apply global visualisation style -----------------------------------
+    plt.rcParams.update({
+        "figure.facecolor": "white",
+        "axes.facecolor": "white",
+        "savefig.dpi": PLOT_DPI,
+        "figure.dpi": PLOT_DPI,
+        "savefig.facecolor": "white",
+        "savefig.edgecolor": "white",
+    })
+
     # --- Ensure outputs directory exists ------------------------------------
     ensure_output_dir(OUTPUT_DIR)
 
@@ -1082,7 +1187,7 @@ def main() -> None:
     model = train_classifier(X_train, y_train)
 
     # --- Stage 7: Evaluate classifier ---------------------------------------
-    metrics = evaluate_classifier(model, X_test, y_test, OUTPUT_DIR)
+    metrics = evaluate_classifier(model, X_test, y_test, OUTPUT_DIR, feature_names=feature_names)
 
     # --- Stage 8: Regression analysis ---------------------------------------
     variants = generate_regression_variants(features_df)

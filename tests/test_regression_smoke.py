@@ -52,6 +52,7 @@ def test_train_and_evaluate_regression_outputs(tmp_path):
     assert os.path.isfile(os.path.join(output_dir, "regression_variant_comparison.csv"))
     assert os.path.isfile(os.path.join(output_dir, "regression_scatter.png"))
     assert os.path.isfile(os.path.join(output_dir, "regression_residuals.png"))
+    assert os.path.isfile(os.path.join(output_dir, "regression_r2_comparison.png"))
 
 
 if __name__ == "__main__":

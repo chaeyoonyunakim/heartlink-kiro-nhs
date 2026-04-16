@@ -45,11 +45,24 @@ class TestEDAOutputFiles:
             path = os.path.join(self.output_dir, f"boxplot_{col}.png")
             assert os.path.isfile(path), f"Missing boxplot_{col}.png"
 
+    def test_categorical_distributions_created(self):
+        """Requirement 10.5 — categorical distribution PNGs are saved."""
+        cat_cols = ["cp", "ca", "thal", "slope", "dataset"]
+        for col in cat_cols:
+            path = os.path.join(self.output_dir, f"cat_distribution_{col}.png")
+            assert os.path.isfile(path), f"Missing cat_distribution_{col}.png"
+
+    def test_target_chol_created(self):
+        """Requirement 10.6 — cholesterol by target distribution PNG is saved."""
+        assert os.path.isfile(os.path.join(self.output_dir, "target_chol.png"))
+
     def test_no_extra_unexpected_files(self):
         """All files in the output directory are expected EDA outputs."""
-        expected = {"correlation_heatmap.png", "target_distribution.png"}
+        expected = {"correlation_heatmap.png", "target_distribution.png", "target_chol.png"}
         for col in NUMERICAL_COLS:
             expected.add(f"distribution_{col}.png")
             expected.add(f"boxplot_{col}.png")
+        for col in ["cp", "ca", "thal", "slope", "dataset"]:
+            expected.add(f"cat_distribution_{col}.png")
         actual = set(os.listdir(self.output_dir))
         assert actual == expected

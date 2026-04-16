@@ -214,3 +214,81 @@ This plan implements the HeartLink pipeline as a single Python script (`src/pipe
 - Unit tests validate specific examples, edge cases, and file-output verification
 - All code resides in `src/pipeline.py`; all tests reside in `tests/`
 - British English is used throughout all print statements and documentation
+
+## Visualisation Overhaul Tasks
+
+- [x] 12. Apply global visualisation style to match reference imagery
+  - [x] 12.1 Add global style constants and apply matplotlib rcParams
+    - Add `PLOT_DPI`, `PRIMARY_COLOR`, `SECONDARY_COLOR`, `ACCENT_COLOR` constants
+    - Apply white background, 100 DPI, and consistent font settings via `plt.rcParams` in `main()`
+    - _Requirements: 10.1, 10.2, 10.3, 10.4_
+
+  - [x] 12.2 Restyle correlation heatmap
+    - Change colormap from `coolwarm` to `YlOrRd` (warm sequential) to match reference `data/heatmap.png`
+    - Resize to 8×6 inches at 100 DPI
+    - _Requirements: 10.12_
+
+  - [x] 12.3 Restyle ROC curve
+    - Change line colour from blue to red (`ACCENT_COLOR`) to match reference `data/roc.png`
+    - Use grey dashed diagonal reference line
+    - _Requirements: 10.9_
+
+  - [x] 12.4 Restyle clustering elbow plot
+    - Change marker/line colour to `PRIMARY_COLOR` (teal/blue) to match reference `data/elbow.png`
+    - Resize to 8×5 inches
+    - _Requirements: 10.4_
+
+  - [x] 12.5 Restyle clustering scatter plot
+    - Use distinct high-contrast cluster colours (tab10 colormap) to match reference `data/pca.png`
+    - Resize to 8×6 inches
+    - _Requirements: 10.11_
+
+  - [x] 12.6 Restyle regression scatter and residual plots
+    - Use `PRIMARY_COLOR` for scatter markers, red for ideal/zero lines
+    - Resize scatter to 7×7, residuals to 7×5
+    - _Requirements: 10.4_
+
+  - [x] 12.7 Restyle distribution histograms and target distribution
+    - Use `PRIMARY_COLOR` for histogram fill
+    - Use `[PRIMARY_COLOR, ACCENT_COLOR]` for target distribution bars
+    - Resize to 8×5 inches
+    - _Requirements: 10.4_
+
+- [x] 13. Add new visualisation outputs
+  - [x] 13.1 Add categorical feature distribution plots
+    - Save bar charts for cp, ca, thal, slope, and dataset as `cat_distribution_{col}.png`
+    - Use `PRIMARY_COLOR` bars, 8×5 inches
+    - _Requirements: 10.5_
+
+  - [x] 13.2 Add cholesterol by target distribution plot
+    - Save overlapping histograms or boxplot of chol grouped by Target_Variable as `target_chol.png`
+    - Use `[PRIMARY_COLOR, ACCENT_COLOR]` colours
+    - _Requirements: 10.6_
+
+  - [x] 13.3 Add feature importance bar chart
+    - Extract top-10 feature importances from the trained RandomForestClassifier
+    - Save horizontal bar chart as `feature_importance.png` using viridis gradient
+    - _Requirements: 10.7_
+
+  - [x] 13.4 Add classifier performance summary bar chart
+    - Plot accuracy, precision, recall, F1, AUC-ROC as grouped bars in `classifier_performance.png`
+    - Use `PRIMARY_COLOR` bars
+    - _Requirements: 10.8_
+
+  - [x] 13.5 Add R² comparison bar chart for regression variants
+    - Plot R² scores for all 8 variants as a bar chart in `regression_r2_comparison.png`
+    - Use viridis gradient, highlight best variant
+    - _Requirements: 10.10_
+
+- [x] 14. Update tests for new visualisation outputs
+  - [x] 14.1 Update end-to-end smoke test expected file list
+    - Add all new PNG files to the expected output list in `tests/test_e2e_smoke.py`
+    - _Requirements: 11.1, 11.4_
+
+  - [x] 14.2 Update EDA unit tests for new plots
+    - Add assertions for categorical distribution PNGs and target_chol.png
+    - _Requirements: 10.5, 10.6_
+
+  - [x] 14.3 Add unit tests for new classification and regression plots
+    - Verify feature_importance.png, classifier_performance.png, and regression_r2_comparison.png are created
+    - _Requirements: 10.7, 10.8, 10.10_

@@ -30,14 +30,23 @@ EXPECTED_OUTPUT_FILES = [
     "boxplot_thalch.png",
     "boxplot_oldpeak.png",
     "boxplot_ca.png",
+    "cat_distribution_cp.png",
+    "cat_distribution_ca.png",
+    "cat_distribution_thal.png",
+    "cat_distribution_slope.png",
+    "cat_distribution_dataset.png",
+    "target_chol.png",
     # Classification
     "confusion_matrix.png",
     "roc_curve.png",
     "classification_report.txt",
+    "feature_importance.png",
+    "classifier_performance.png",
     # Regression
     "regression_variant_comparison.csv",
     "regression_scatter.png",
     "regression_residuals.png",
+    "regression_r2_comparison.png",
     # Clustering
     "clustering_elbow.png",
     "clustering_scatter.png",
