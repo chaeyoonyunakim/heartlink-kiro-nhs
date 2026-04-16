@@ -24,6 +24,10 @@
   <img src="/outputs/correlation_heatmap.png" alt="Correlation heatmap of numerical features showing pairwise Pearson correlations" class="dashboard-plot">
   <figcaption class="nhsuk-u-secondary-text-colour">Pairwise Pearson correlations between numerical features</figcaption>
 </figure>
+<div class="nhsuk-inset-text dashboard-keypoint">
+  <span class="nhsuk-u-visually-hidden">Key point: </span>
+  <p><strong>What does this mean?</strong> Age and maximum heart rate (thalch) show a moderate negative correlation — older patients tend to achieve lower peak heart rates. Most other features are weakly correlated, suggesting they capture distinct clinical information and are suitable as independent predictors.</p>
+</div>
 
 <h2>Target variable distribution</h2>
 <div class="nhsuk-grid-row">
@@ -32,16 +36,25 @@
       <img src="/outputs/target_distribution.png" alt="Bar chart showing count of patients with and without heart disease" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Binary target: 0 = no disease, 1 = disease present</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> The dataset is roughly balanced between patients with and without heart disease. This means the classifier is not biased towards one class, and accuracy is a meaningful metric.</p>
+    </div>
   </div>
   <div class="nhsuk-grid-column-one-half">
     <figure class="dashboard-figure">
       <img src="/outputs/target_chol.png" alt="Cholesterol distribution grouped by target variable" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Cholesterol distribution by target variable</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> Cholesterol distributions overlap substantially between disease and no-disease groups. Cholesterol alone is not a strong discriminator — the model needs multiple features together to make accurate predictions.</p>
+    </div>
   </div>
 </div>
 
 <h2>Numerical feature distributions</h2>
+<p>Histograms show the spread of each continuous variable. Skewed distributions and outliers justify the use of median imputation over mean imputation.</p>
 <div class="nhsuk-grid-row">
   {% for plot in plots if plot.startswith('distribution_') %}
   <div class="nhsuk-grid-column-one-half">
@@ -52,8 +65,13 @@
   </div>
   {% endfor %}
 </div>
+<div class="nhsuk-inset-text dashboard-keypoint">
+  <span class="nhsuk-u-visually-hidden">Key point: </span>
+  <p><strong>What does this mean?</strong> Several features (oldpeak, ca) are right-skewed with outliers, confirming that median imputation is more robust than mean for this dataset. Age is roughly normally distributed around 54 years, and maximum heart rate centres around 140 bpm.</p>
+</div>
 
 <h2>Categorical feature distributions</h2>
+<p>Bar charts show the frequency of each category. Imbalanced categories may affect model performance.</p>
 <div class="nhsuk-grid-row">
   {% for plot in plots if plot.startswith('cat_distribution_') %}
   <div class="nhsuk-grid-column-one-half">
@@ -64,8 +82,13 @@
   </div>
   {% endfor %}
 </div>
+<div class="nhsuk-inset-text dashboard-keypoint">
+  <span class="nhsuk-u-visually-hidden">Key point: </span>
+  <p><strong>What does this mean?</strong> "Asymptomatic" is the most common chest pain type, and the dataset is predominantly male. The hospital distribution shows Cleveland contributes the most complete records, while ca and thal have high missingness in non-Cleveland sources — a key driver of hospital bias.</p>
+</div>
 
 <h2>Boxplots by sex and target variable</h2>
+<p>Boxplots reveal outliers and how feature distributions differ between groups, helping identify clinically meaningful patterns.</p>
 <div class="nhsuk-grid-row">
   {% for plot in plots if plot.startswith('boxplot_') %}
   <div class="nhsuk-grid-column-full">
@@ -75,5 +98,9 @@
     </figure>
   </div>
   {% endfor %}
+</div>
+<div class="nhsuk-inset-text dashboard-keypoint">
+  <span class="nhsuk-u-visually-hidden">Key point: </span>
+  <p><strong>What does this mean?</strong> Patients with heart disease tend to have lower maximum heart rates and higher oldpeak (ST depression) values. Blood pressure and cholesterol show less separation between groups, reinforcing that these features are weaker individual predictors but contribute to the model in combination.</p>
 </div>
 {% endblock %}

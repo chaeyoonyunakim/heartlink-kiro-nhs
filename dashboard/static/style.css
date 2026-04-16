@@ -203,6 +203,17 @@
   line-height: 1.1;
 }
 
+/* ---- Key-point summaries under graphs ---- */
+.dashboard-keypoint {
+  margin-top: -8px;
+  margin-bottom: 24px;
+  border-left-color: #005eb8;
+}
+
+.dashboard-keypoint p {
+  margin-bottom: 0;
+}
+
 /* ---- Form spacing ---- */
 .nhsuk-form-group {
   margin-bottom: 24px;

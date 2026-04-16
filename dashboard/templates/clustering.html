@@ -26,12 +26,20 @@
       <img src="/outputs/clustering_elbow.png" alt="Elbow plot showing KMeans inertia decreasing as the number of clusters increases from 2 to 8" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Elbow plot — inertia vs number of clusters</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> Inertia measures how tightly patients are grouped within each cluster — lower is better. The "elbow" is where adding more clusters stops giving meaningful improvement. This helps identify the natural number of patient groups in the data.</p>
+    </div>
   </div>
   <div class="nhsuk-grid-column-one-half">
     <figure class="dashboard-figure">
       <img src="/outputs/clustering_scatter.png" alt="2D scatter plot showing patient clusters plotted on the first two principal components from PCA" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Cluster scatter — first two PCA components</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> Each dot is a patient, coloured by their assigned cluster. PCA reduces the many clinical features into two dimensions for visualisation. Distinct colour groupings suggest the model has found meaningful patient subgroups — potentially corresponding to different risk profiles or clinical presentations.</p>
+    </div>
   </div>
 </div>
 
@@ -42,6 +50,6 @@
       Clinical interpretation
     </span>
   </h3>
-  <p>Cluster assignments are exploratory and should not be used for clinical decision-making without further validation. The clusters reflect data patterns, not confirmed diagnostic categories.</p>
+  <p>Cluster assignments are exploratory and should not be used for clinical decision-making without further validation. The clusters reflect data patterns, not confirmed diagnostic categories. Further work is needed to map clusters to clinically actionable risk groups.</p>
 </div>
 {% endblock %}

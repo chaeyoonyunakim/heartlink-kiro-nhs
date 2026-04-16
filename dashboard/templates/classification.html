@@ -26,12 +26,20 @@
       <img src="/outputs/classifier_performance.png" alt="Bar chart comparing accuracy, precision, recall, F1, and AUC-ROC scores" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Classifier performance metrics</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> All metrics are above 0.80, indicating the model reliably distinguishes patients with and without heart disease. High recall means the model catches most true disease cases — critical in a screening context where missing a positive case is more costly than a false alarm.</p>
+    </div>
   </div>
   <div class="nhsuk-grid-column-one-half">
     <figure class="dashboard-figure">
       <img src="/outputs/feature_importance.png" alt="Horizontal bar chart showing top 10 most important features for the Random Forest model" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Top 10 feature importances</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> The model relies most heavily on chest pain type, maximum heart rate, and ST depression (oldpeak). These align with established cardiology — asymptomatic chest pain and reduced exercise capacity are strong clinical indicators of coronary artery disease.</p>
+    </div>
   </div>
 </div>
 
@@ -42,12 +50,20 @@
       <img src="/outputs/confusion_matrix.png" alt="Confusion matrix heatmap showing true positives, true negatives, false positives, and false negatives" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Confusion matrix</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> The diagonal cells show correct predictions. Off-diagonal cells show errors — false positives (healthy patients flagged as disease) and false negatives (disease patients missed). In a screening tool, minimising false negatives is the priority.</p>
+    </div>
   </div>
   <div class="nhsuk-grid-column-one-half">
     <figure class="dashboard-figure">
       <img src="/outputs/roc_curve.png" alt="ROC curve showing the trade-off between true positive rate and false positive rate" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">ROC curve</figcaption>
     </figure>
+    <div class="nhsuk-inset-text dashboard-keypoint">
+      <span class="nhsuk-u-visually-hidden">Key point: </span>
+      <p><strong>What does this mean?</strong> The ROC curve shows how well the model separates disease from no-disease at different thresholds. The further the curve bows towards the top-left corner, the better. An AUC near 0.90 means the model has strong discriminative ability.</p>
+    </div>
   </div>
 </div>
 
