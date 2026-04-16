@@ -13,6 +13,54 @@
  *   White:      #ffffff
  */
 
+/* ---- Header layout fix — prevent logo/service-name overlapping nav ---- */
+.nhsuk-header__container {
+  position: relative;
+  padding-bottom: 0;
+}
+
+.nhsuk-header__logo {
+  max-width: 100%;
+}
+
+.nhsuk-header__service-name {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.nhsuk-header__navigation-container {
+  clear: both;
+  position: relative;
+  z-index: 1;
+}
+
+.nhsuk-header__navigation {
+  position: relative;
+  width: 100%;
+}
+
+.nhsuk-header__navigation-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nhsuk-header__navigation-item {
+  border-top: none;
+}
+
+.nhsuk-header__navigation-link {
+  white-space: nowrap;
+  font-size: 16px;
+  padding: 12px 14px;
+}
+
 /* ---- Plot images ---- */
 .dashboard-plot {
   width: 100%;
