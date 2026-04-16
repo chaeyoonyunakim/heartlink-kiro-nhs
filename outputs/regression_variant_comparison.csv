@@ -1,0 +1,9 @@
+variant_label,hospital,imputation,outlier_removal,n_samples,MAE,RMSE,R2
+All-Unknown-WithOutliers,all,unknown,False,920,19.0008,23.224,0.1099
+All-Unknown-NoOutliers,all,unknown,True,841,19.3166,23.3442,0.0941
+All-MeanMode-WithOutliers,all,mean_mode,False,920,18.8841,23.1416,0.1159
+All-MeanMode-NoOutliers,all,mean_mode,True,841,19.1849,23.2749,0.0988
+Cleveland-Unknown-WithOutliers,cleveland,unknown,False,304,15.9702,19.1447,0.1543
+Cleveland-Unknown-NoOutliers,cleveland,unknown,True,289,17.9799,22.6507,0.0911
+Cleveland-MeanMode-WithOutliers,cleveland,mean_mode,False,304,15.9702,19.1447,0.1543
+Cleveland-MeanMode-NoOutliers,cleveland,mean_mode,True,289,17.9799,22.6507,0.0911
