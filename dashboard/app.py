@@ -240,62 +240,84 @@ def radiographer():
 
 @app.route("/pharmacist", methods=["GET", "POST"])
 def pharmacist():
-    """Pharmacist — quick screening tool for walk-in consultations."""
+    """Pharmacist — NHS BP monitoring service with NICE NG136 staging."""
     result = None
     if request.method == "POST":
         try:
             age = int(request.form.get("age", 0))
-            trestbps = int(request.form.get("trestbps", 0))
-            chol = int(request.form.get("chol", 0))
+            systolic = int(request.form.get("systolic", 0))
+            diastolic = int(request.form.get("diastolic", 0))
+            chol = int(request.form.get("chol", 0)) if request.form.get("chol") else 0
         except (ValueError, TypeError):
             result = {
-                "risk": "Error",
-                "cluster": "N/A",
-                "advice": "Please check the entered values.",
-                "colour": "red",
-                "action": "retry",
+                "age": "—", "systolic": "—", "diastolic": "—", "chol": "—",
+                "bp_stage": "error", "bp_stage_label": "Error",
+                "heartlink": None,
             }
             return render_template("pharmacist.html", result=result, active_page="pharmacist")
 
-        risk_score = 0
-        if age > 60:
-            risk_score += 2
-        elif age > 50:
-            risk_score += 1
-        if chol > 250:
-            risk_score += 2
-        elif chol > 200:
-            risk_score += 1
-        if trestbps > 140:
-            risk_score += 2
-        elif trestbps > 130:
-            risk_score += 1
-
-        if risk_score >= 4:
-            result = {
-                "risk": "Elevated",
-                "cluster": "Cluster 3 — High Risk",
-                "advice": "Trigger urgent GP referral. Patient shows multiple elevated cardiovascular markers.",
-                "colour": "red",
-                "action": "gp_referral",
-            }
-        elif risk_score >= 2:
-            result = {
-                "risk": "Potential Risk",
-                "cluster": "Cluster 2 — Potential Risk",
-                "advice": "Offer lifestyle advice (diet, exercise, smoking cessation). "
-                          "Book routine GP follow-up within 2 weeks.",
-                "colour": "yellow",
-                "action": "lifestyle",
-            }
+        # NICE NG136 BP staging (clinic readings)
+        if systolic >= 180 or diastolic >= 120:
+            bp_stage = "severe"
+            bp_stage_label = "Severe hypertension"
+        elif systolic >= 160 or diastolic >= 100:
+            bp_stage = "stage2"
+            bp_stage_label = "Stage 2 hypertension"
+        elif systolic >= 140 or diastolic >= 90:
+            bp_stage = "stage1"
+            bp_stage_label = "Stage 1 hypertension"
         else:
-            result = {
-                "risk": "Low",
-                "cluster": "Cluster 1 — Low Risk",
-                "advice": "Reassure patient. Recommend annual check-up and healthy lifestyle maintenance.",
-                "colour": "green",
-                "action": "reassure",
-            }
+            bp_stage = "normal"
+            bp_stage_label = "Normal"
+
+        # HeartLink cardiovascular risk (simple mock using BP, age, chol)
+        heartlink = None
+        if chol > 0:
+            risk_score = 0
+            if age > 60:
+                risk_score += 2
+            elif age > 50:
+                risk_score += 1
+            if chol > 250:
+                risk_score += 2
+            elif chol > 200:
+                risk_score += 1
+            if systolic > 140:
+                risk_score += 2
+            elif systolic > 130:
+                risk_score += 1
+
+            if risk_score >= 4:
+                heartlink = {
+                    "risk": "Elevated",
+                    "cluster": "Cluster 3 — High Risk",
+                    "advice": "Multiple elevated cardiovascular markers. Urgent GP referral recommended.",
+                    "colour": "red",
+                }
+            elif risk_score >= 2:
+                heartlink = {
+                    "risk": "Potential Risk",
+                    "cluster": "Cluster 2 — Potential Risk",
+                    "advice": "Offer lifestyle advice. Book routine GP follow-up within 2 weeks.",
+                    "colour": "yellow",
+                }
+            else:
+                heartlink = {
+                    "risk": "Low",
+                    "cluster": "Cluster 1 — Low Risk",
+                    "advice": "Reassure patient. Recommend annual check-up.",
+                    "colour": "green",
+                }
+
+        result = {
+            "age": age,
+            "systolic": systolic,
+            "diastolic": diastolic,
+            "chol": chol if chol > 0 else "Not recorded",
+            "bp_stage": bp_stage,
+            "bp_stage_label": bp_stage_label,
+            "heartlink": heartlink,
+        }
 
     return render_template("pharmacist.html", result=result, active_page="pharmacist")
 
