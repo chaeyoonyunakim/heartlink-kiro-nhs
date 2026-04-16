@@ -126,10 +126,17 @@
    ================================================================== */
 .dashboard-plot {
   width: 100%;
+  max-width: 600px;
   height: auto;
   border: 1px solid #d8dde0;
   border-radius: 4px;
   background: #ffffff;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-plot:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
 }
 
 .dashboard-figure {
@@ -138,7 +145,98 @@
 
 .dashboard-figure figcaption {
   margin-top: 8px;
+  font-size: 14px;
+}
+
+/* Full-width graphs (heatmap, boxplots, R2 comparison) */
+.dashboard-plot--wide {
+  max-width: 100%;
+}
+
+/* Hidden info text — revealed in modal */
+.hl-graph__info {
+  display: none;
+}
+
+/* Click hint on graph images */
+.hl-graph .dashboard-plot::after {
+  content: "";
+}
+
+.hl-graph figcaption::after {
+  content: " — click graph for details";
+  color: #005eb8;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ==================================================================
+   Modal overlay and card
+   ================================================================== */
+.hl-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(33, 43, 50, 0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+
+.hl-modal-overlay--open {
+  display: flex;
+}
+
+.hl-modal {
+  background: #fff;
+  border-radius: 8px;
+  max-width: 720px;
+  width: 100%;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hl-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #4c6272;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.hl-modal__close:hover,
+.hl-modal__close:focus {
+  color: #212b32;
+}
+
+.hl-modal__img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #d8dde0;
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.hl-modal__text {
+  color: #212b32;
   font-size: 16px;
+  line-height: 1.6;
+}
+
+.hl-modal__text p {
+  margin-bottom: 8px;
 }
 
 /* ==================================================================
@@ -201,18 +299,7 @@
   line-height: 1.1;
 }
 
-/* ==================================================================
-   Key-point summaries under graphs
-   ================================================================== */
-.dashboard-keypoint {
-  margin-top: -8px;
-  margin-bottom: 24px;
-  border-left-color: #005eb8;
-}
-
-.dashboard-keypoint p {
-  margin-bottom: 0;
-}
+/* Key-point summaries are now shown in the modal */
 
 /* ==================================================================
    Form spacing

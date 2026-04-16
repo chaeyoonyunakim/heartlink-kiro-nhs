@@ -16,52 +16,47 @@
 
 {% block content %}
 <h1>Regression — Maximum Heart Rate Prediction</h1>
-
-<p class="nhsuk-body-l">Linear Regression predicting maximum heart rate (thalch) from age, resting blood pressure, and cholesterol. Eight dataset variants are tested across hospital inclusion, imputation method, and outlier removal.</p>
+<p class="nhsuk-body-l">Linear Regression predicting maximum heart rate (thalch) from age, resting blood pressure, and cholesterol. Eight dataset variants tested.</p>
 
 <h2>R² comparison across variants</h2>
-<figure class="dashboard-figure">
-  <img src="/outputs/regression_r2_comparison.png" alt="Bar chart comparing R-squared scores across 8 regression dataset variants" class="dashboard-plot">
+<figure class="dashboard-figure hl-graph">
+  <img src="/outputs/regression_r2_comparison.png" alt="Bar chart comparing R-squared scores across 8 regression dataset variants" class="dashboard-plot dashboard-plot--wide">
   <figcaption class="nhsuk-u-secondary-text-colour">R² scores for all 8 dataset variants — best variant highlighted</figcaption>
+  <div class="hl-graph__info">
+    <p>R² measures how much of the variation in maximum heart rate is explained by the model. Higher is better (1.0 = perfect).</p>
+    <p>The best variant uses Cleveland-only data, suggesting that single-source data with consistent collection practices produces more reliable predictions than pooling all hospitals.</p>
+  </div>
 </figure>
-<div class="nhsuk-inset-text dashboard-keypoint">
-  <span class="nhsuk-u-visually-hidden">Key point: </span>
-  <p><strong>What does this mean?</strong> R² measures how much of the variation in maximum heart rate is explained by the model. Higher is better (1.0 = perfect). The best variant uses Cleveland-only data, suggesting that single-source data with consistent collection practices produces more reliable predictions than pooling all hospitals.</p>
-</div>
 
 <h2>Best variant — predicted vs actual</h2>
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-one-half">
-    <figure class="dashboard-figure">
-      <img src="/outputs/regression_scatter.png" alt="Scatter plot of predicted versus actual maximum heart rate values for the best regression variant" class="dashboard-plot">
+    <figure class="dashboard-figure hl-graph">
+      <img src="/outputs/regression_scatter.png" alt="Scatter plot of predicted versus actual maximum heart rate" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Predicted vs actual thalch</figcaption>
+      <div class="hl-graph__info">
+        <p>Points close to the red dashed line indicate accurate predictions. The scatter shows the model captures the general trend but with substantial spread.</p>
+        <p>Age, BP, and cholesterol alone explain only part of maximum heart rate variation — additional features like exercise habits and medication would improve prediction.</p>
+      </div>
     </figure>
-    <div class="nhsuk-inset-text dashboard-keypoint">
-      <span class="nhsuk-u-visually-hidden">Key point: </span>
-      <p><strong>What does this mean?</strong> Points close to the red dashed line indicate accurate predictions. The scatter shows the model captures the general trend (higher actual = higher predicted) but with substantial spread — age, BP, and cholesterol alone explain only part of maximum heart rate variation.</p>
-    </div>
   </div>
   <div class="nhsuk-grid-column-one-half">
-    <figure class="dashboard-figure">
-      <img src="/outputs/regression_residuals.png" alt="Residual plot showing prediction errors for the best regression variant" class="dashboard-plot">
+    <figure class="dashboard-figure hl-graph">
+      <img src="/outputs/regression_residuals.png" alt="Residual plot showing prediction errors" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Residual plot</figcaption>
+      <div class="hl-graph__info">
+        <p>Residuals (prediction errors) should be randomly scattered around zero with no pattern. A roughly even spread confirms the model's assumptions are reasonable.</p>
+        <p>Some large residuals (±40 bpm) indicate cases where additional features would improve prediction accuracy.</p>
+      </div>
     </figure>
-    <div class="nhsuk-inset-text dashboard-keypoint">
-      <span class="nhsuk-u-visually-hidden">Key point: </span>
-      <p><strong>What does this mean?</strong> Residuals (prediction errors) should be randomly scattered around zero with no pattern. A roughly even spread here confirms the model's assumptions are reasonable, though some large residuals (±40 bpm) indicate cases where additional features would improve prediction.</p>
-    </div>
   </div>
 </div>
 
 {% if variants %}
 <h2>Variant comparison table</h2>
-<div class="nhsuk-inset-text dashboard-keypoint">
-  <span class="nhsuk-u-visually-hidden">Key point: </span>
-  <p><strong>What does this mean?</strong> Each row is a different preprocessing strategy. Comparing MAE (average error in bpm), RMSE (penalises large errors more), and R² across variants reveals which data preparation choices matter most. Hospital selection and outlier removal have the largest impact on model quality.</p>
-</div>
 <div class="nhsuk-table-container">
   <table class="nhsuk-table">
-    <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Regression variant comparison showing MAE, RMSE, and R² for each of 8 variants</caption>
+    <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Regression variant comparison</caption>
     <thead class="nhsuk-table__head" role="rowgroup">
       <tr role="row">
         <th class="nhsuk-table__header" scope="col">Variant</th>

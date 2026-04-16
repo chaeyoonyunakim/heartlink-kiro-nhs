@@ -16,91 +16,119 @@
 
 {% block content %}
 <h1>Exploratory Data Analysis</h1>
-
 <p class="nhsuk-body-l">Summary statistics, distributions, and correlations across the UCI Heart Disease dataset (920 patients from 4 hospitals).</p>
 
 <h2>Correlation heatmap</h2>
-<figure class="dashboard-figure">
-  <img src="/outputs/correlation_heatmap.png" alt="Correlation heatmap of numerical features showing pairwise Pearson correlations" class="dashboard-plot">
+<figure class="dashboard-figure hl-graph">
+  <img src="/outputs/correlation_heatmap.png" alt="Correlation heatmap of numerical features" class="dashboard-plot dashboard-plot--wide">
   <figcaption class="nhsuk-u-secondary-text-colour">Pairwise Pearson correlations between numerical features</figcaption>
+  <div class="hl-graph__info">
+    <p>Age and maximum heart rate (thalch) show a moderate negative correlation — older patients tend to achieve lower peak heart rates.</p>
+    <p>Most other features are weakly correlated, suggesting they capture distinct clinical information and are suitable as independent predictors.</p>
+  </div>
 </figure>
-<div class="nhsuk-inset-text dashboard-keypoint">
-  <span class="nhsuk-u-visually-hidden">Key point: </span>
-  <p><strong>What does this mean?</strong> Age and maximum heart rate (thalch) show a moderate negative correlation — older patients tend to achieve lower peak heart rates. Most other features are weakly correlated, suggesting they capture distinct clinical information and are suitable as independent predictors.</p>
-</div>
 
 <h2>Target variable distribution</h2>
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-one-half">
-    <figure class="dashboard-figure">
+    <figure class="dashboard-figure hl-graph">
       <img src="/outputs/target_distribution.png" alt="Bar chart showing count of patients with and without heart disease" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Binary target: 0 = no disease, 1 = disease present</figcaption>
+      <div class="hl-graph__info">
+        <p>The dataset is roughly balanced between patients with and without heart disease. This means the classifier is not biased towards one class, and accuracy is a meaningful metric.</p>
+      </div>
     </figure>
-    <div class="nhsuk-inset-text dashboard-keypoint">
-      <span class="nhsuk-u-visually-hidden">Key point: </span>
-      <p><strong>What does this mean?</strong> The dataset is roughly balanced between patients with and without heart disease. This means the classifier is not biased towards one class, and accuracy is a meaningful metric.</p>
-    </div>
   </div>
   <div class="nhsuk-grid-column-one-half">
-    <figure class="dashboard-figure">
+    <figure class="dashboard-figure hl-graph">
       <img src="/outputs/target_chol.png" alt="Cholesterol distribution grouped by target variable" class="dashboard-plot">
       <figcaption class="nhsuk-u-secondary-text-colour">Cholesterol distribution by target variable</figcaption>
+      <div class="hl-graph__info">
+        <p>Cholesterol distributions overlap substantially between disease and no-disease groups. Cholesterol alone is not a strong discriminator — the model needs multiple features together to make accurate predictions.</p>
+      </div>
     </figure>
-    <div class="nhsuk-inset-text dashboard-keypoint">
-      <span class="nhsuk-u-visually-hidden">Key point: </span>
-      <p><strong>What does this mean?</strong> Cholesterol distributions overlap substantially between disease and no-disease groups. Cholesterol alone is not a strong discriminator — the model needs multiple features together to make accurate predictions.</p>
-    </div>
   </div>
 </div>
 
 <h2>Numerical feature distributions</h2>
-<p>Histograms show the spread of each continuous variable. Skewed distributions and outliers justify the use of median imputation over mean imputation.</p>
 <div class="nhsuk-grid-row">
   {% for plot in plots if plot.startswith('distribution_') %}
+  {% set col_name = plot.replace('distribution_', '').replace('.png', '') %}
   <div class="nhsuk-grid-column-one-half">
-    <figure class="dashboard-figure">
-      <img src="/outputs/{{ plot }}" alt="Histogram showing distribution of {{ plot.replace('distribution_', '').replace('.png', '') }}" class="dashboard-plot">
-      <figcaption class="nhsuk-u-secondary-text-colour">{{ plot.replace('distribution_', '').replace('.png', '') }}</figcaption>
+    <figure class="dashboard-figure hl-graph">
+      <img src="/outputs/{{ plot }}" alt="Histogram showing distribution of {{ col_name }}" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">{{ col_name }}</figcaption>
+      <div class="hl-graph__info">
+        {% if col_name == 'age' %}
+        <p>Age is roughly normally distributed around 54 years. The model uses age as a key predictor — older patients have higher cardiovascular risk.</p>
+        {% elif col_name == 'trestbps' %}
+        <p>Resting blood pressure centres around 130 mm Hg with a right tail. Values above 140 indicate hypertension. One zero value (biologically impossible) is caught by the guardrail system.</p>
+        {% elif col_name == 'chol' %}
+        <p>Cholesterol has a wide spread (100–600 mg/dl) with 172 zero values flagged as biologically impossible. The right skew justifies median over mean imputation.</p>
+        {% elif col_name == 'thalch' %}
+        <p>Maximum heart rate centres around 140 bpm. Lower values during exercise testing suggest reduced cardiac function and are strongly associated with disease presence.</p>
+        {% elif col_name == 'oldpeak' %}
+        <p>ST depression (oldpeak) is heavily right-skewed — most patients show minimal depression, but high values indicate exercise-induced ischaemia, a strong disease indicator.</p>
+        {% elif col_name == 'ca' %}
+        <p>Number of major vessels (0–3) coloured by fluoroscopy. Most patients show 0, but higher values strongly predict disease. This variable has 66% missingness in non-Cleveland sources.</p>
+        {% else %}
+        <p>Distribution of {{ col_name }} across the dataset. Skewness and outliers inform the choice of imputation and scaling strategy.</p>
+        {% endif %}
+      </div>
     </figure>
   </div>
   {% endfor %}
-</div>
-<div class="nhsuk-inset-text dashboard-keypoint">
-  <span class="nhsuk-u-visually-hidden">Key point: </span>
-  <p><strong>What does this mean?</strong> Several features (oldpeak, ca) are right-skewed with outliers, confirming that median imputation is more robust than mean for this dataset. Age is roughly normally distributed around 54 years, and maximum heart rate centres around 140 bpm.</p>
 </div>
 
 <h2>Categorical feature distributions</h2>
-<p>Bar charts show the frequency of each category. Imbalanced categories may affect model performance.</p>
 <div class="nhsuk-grid-row">
   {% for plot in plots if plot.startswith('cat_distribution_') %}
+  {% set col_name = plot.replace('cat_distribution_', '').replace('.png', '') %}
   <div class="nhsuk-grid-column-one-half">
-    <figure class="dashboard-figure">
-      <img src="/outputs/{{ plot }}" alt="Bar chart showing distribution of {{ plot.replace('cat_distribution_', '').replace('.png', '') }}" class="dashboard-plot">
-      <figcaption class="nhsuk-u-secondary-text-colour">{{ plot.replace('cat_distribution_', '').replace('.png', '') }}</figcaption>
+    <figure class="dashboard-figure hl-graph">
+      <img src="/outputs/{{ plot }}" alt="Bar chart showing distribution of {{ col_name }}" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">{{ col_name }}</figcaption>
+      <div class="hl-graph__info">
+        {% if col_name == 'cp' %}
+        <p>"Asymptomatic" is the most common chest pain type and is paradoxically the strongest predictor of disease — patients with silent ischaemia often present without typical angina symptoms.</p>
+        {% elif col_name == 'dataset' %}
+        <p>Cleveland contributes the most complete records. Non-Cleveland sources have high missingness in ca, thal, and slope — a key driver of hospital bias that the clustering pipeline addresses by excluding these variables.</p>
+        {% elif col_name == 'ca' %}
+        <p>Most recorded values are 0 (no significant narrowing). Higher values (1–3) strongly predict disease. The high missingness rate (66%) reflects that fluoroscopy is not routinely performed at all sites.</p>
+        {% elif col_name == 'thal' %}
+        <p>Thalassemia test results: "normal", "fixed defect", and "reversible defect". Reversible defects are associated with exercise-induced ischaemia. 53% of values are missing.</p>
+        {% elif col_name == 'slope' %}
+        <p>ST segment slope during exercise: flat and downsloping patterns indicate ischaemia. 34% of values are missing, concentrated in non-Cleveland sources.</p>
+        {% else %}
+        <p>Distribution of {{ col_name }} across the dataset.</p>
+        {% endif %}
+      </div>
     </figure>
   </div>
   {% endfor %}
-</div>
-<div class="nhsuk-inset-text dashboard-keypoint">
-  <span class="nhsuk-u-visually-hidden">Key point: </span>
-  <p><strong>What does this mean?</strong> "Asymptomatic" is the most common chest pain type, and the dataset is predominantly male. The hospital distribution shows Cleveland contributes the most complete records, while ca and thal have high missingness in non-Cleveland sources — a key driver of hospital bias.</p>
 </div>
 
 <h2>Boxplots by sex and target variable</h2>
-<p>Boxplots reveal outliers and how feature distributions differ between groups, helping identify clinically meaningful patterns.</p>
-<div class="nhsuk-grid-row">
-  {% for plot in plots if plot.startswith('boxplot_') %}
-  <div class="nhsuk-grid-column-full">
-    <figure class="dashboard-figure">
-      <img src="/outputs/{{ plot }}" alt="Boxplot of {{ plot.replace('boxplot_', '').replace('.png', '') }} grouped by sex and target variable" class="dashboard-plot">
-      <figcaption class="nhsuk-u-secondary-text-colour">{{ plot.replace('boxplot_', '').replace('.png', '') }} — by sex and target variable</figcaption>
-    </figure>
+{% for plot in plots if plot.startswith('boxplot_') %}
+{% set col_name = plot.replace('boxplot_', '').replace('.png', '') %}
+<figure class="dashboard-figure hl-graph">
+  <img src="/outputs/{{ plot }}" alt="Boxplot of {{ col_name }} grouped by sex and target variable" class="dashboard-plot dashboard-plot--wide">
+  <figcaption class="nhsuk-u-secondary-text-colour">{{ col_name }} — by sex and target variable</figcaption>
+  <div class="hl-graph__info">
+    {% if col_name == 'thalch' %}
+    <p>Patients with heart disease achieve significantly lower maximum heart rates during exercise testing. This is the strongest continuous predictor in the dataset — reduced exercise capacity directly reflects compromised cardiac function.</p>
+    {% elif col_name == 'oldpeak' %}
+    <p>ST depression is markedly higher in disease patients. Values above 2.0 are clinically significant and indicate exercise-induced ischaemia — the heart muscle is not receiving enough blood during exertion.</p>
+    {% elif col_name == 'age' %}
+    <p>Disease patients tend to be slightly older, but there is substantial overlap. Age alone is not diagnostic, but it contributes to the overall risk profile alongside other features.</p>
+    {% elif col_name == 'chol' %}
+    <p>Cholesterol shows minimal separation between groups. This confirms that total cholesterol is a weak individual predictor of heart disease — the model relies more on exercise-related features.</p>
+    {% elif col_name == 'trestbps' %}
+    <p>Resting blood pressure is slightly higher in disease patients but with wide overlap. Hypertension is a risk factor but not a strong standalone predictor in this dataset.</p>
+    {% else %}
+    <p>Comparison of {{ col_name }} between groups. Differences in median and spread help identify which features are most discriminative for the classification model.</p>
+    {% endif %}
   </div>
-  {% endfor %}
-</div>
-<div class="nhsuk-inset-text dashboard-keypoint">
-  <span class="nhsuk-u-visually-hidden">Key point: </span>
-  <p><strong>What does this mean?</strong> Patients with heart disease tend to have lower maximum heart rates and higher oldpeak (ST depression) values. Blood pressure and cholesterol show less separation between groups, reinforcing that these features are weaker individual predictors but contribute to the model in combination.</p>
-</div>
+</figure>
+{% endfor %}
 {% endblock %}
