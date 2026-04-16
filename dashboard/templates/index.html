@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+
+{% block title %}HeartLink{% endblock %}
+
+{% block content %}
+<h1>HeartLink</h1>
+<p class="nhsuk-body-l">A reproducible machine learning pipeline for heart disease analysis, designed for NHS clinical contexts.</p>
+
+<div class="nhsuk-inset-text">
+  <span class="nhsuk-u-visually-hidden">Information: </span>
+  <p>Cardiovascular disease (CVD) is a major health concern identified in the NHS Long Term Plan as the single biggest condition where lives can be saved over the next 10 years. HeartLink builds on the work of the <a href="https://nhsengland.github.io/datascience/our_work/cvd_pathways/">NHS England Data Science CVD Pathways</a> project, which links primary and secondary care data for over 16 million patients to enable advanced analytics on CVD prevention, progression, and outcomes.</p>
+  <p>Where CVD Pathways focuses on building the data infrastructure — linking CVDPREVENT audit data with hospital admissions, A&amp;E attendances, mortality records, and prescriptions — HeartLink demonstrates how that enriched patient data can power clinical decision support. Using the UCI Heart Disease dataset as a prototype, HeartLink delivers three complementary analyses: binary classification of heart disease presence, regression to predict cardiac functional decline, and unsupervised clustering to discover patient risk groups.</p>
+  <p>This aligns with the CVD Pathways project's next steps around risk stratification, time-to-first-event analysis, and intervention effectiveness — translating linked data assets into actionable clinical insights at the point of care.</p>
+</div>
+
+<h2>Choose a dashboard</h2>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/model">Prediction Model Dashboard</a>
+        </h2>
+        <p class="nhsuk-card__description">Data science outputs from the HeartLink pipeline — exploratory data analysis, classification, regression, and clustering results with visualisations and metrics.</p>
+        <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">For data scientists, ML engineers, and technical reviewers.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/users">User Journeys Dashboard</a>
+        </h2>
+        <p class="nhsuk-card__description">Prototype interfaces for each user persona — patient screening, clinician triage, pharmacist BP monitoring, radiographer data quality, clinical lead oversight, and workforce planning.</p>
+        <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">For patients, clinicians, pharmacists, and NHS service owners.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

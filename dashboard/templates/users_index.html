@@ -1,0 +1,75 @@
+{% extends "base_users.html" %}
+{% set active_page = "users-home" %}
+
+{% block title %}User Journeys{% endblock %}
+
+{% block content %}
+<h1>User Journeys</h1>
+<p class="nhsuk-body-l">Prototype interfaces tailored to each user of the HeartLink cardiac screening pathway.</p>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/users/patient">Patient Screening</a>
+        </h2>
+        <p class="nhsuk-card__description">Enter your health information for a preliminary heart disease risk assessment.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/users/clinician">Clinician Dashboard</a>
+        </h2>
+        <p class="nhsuk-card__description">Review patient data quality flags, classification predictions, and cluster assignments.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/users/clinical-lead">Clinical Lead</a>
+        </h2>
+        <p class="nhsuk-card__description">Service performance metrics, data quality summary, and pipeline reproducibility status.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/users/radiographer">Radiographer</a>
+        </h2>
+        <p class="nhsuk-card__description">Data quality feedback for high-missingness diagnostic variables across hospitals.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/users/pharmacist">Pharmacist — BP Monitoring</a>
+        </h2>
+        <p class="nhsuk-card__description">NHS Blood Pressure Check Service with clinic cuff checks, ABPM outputs, and NICE NG136 staging.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card nhsuk-card--clickable">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/users/workforce">Workforce Leader</a>
+        </h2>
+        <p class="nhsuk-card__description">Strategic overview of screening capacity, training needs, and workforce optimisation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

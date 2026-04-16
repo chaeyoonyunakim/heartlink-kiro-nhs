@@ -1,0 +1,347 @@
+/*
+ * HeartLink Dashboard — Custom styles
+ * Matching the england.nhs.uk three-tier header pattern.
+ *
+ * NHS colour references:
+ *   Blue:       #005eb8
+ *   Dark blue:  #003087
+ *   Darkest:    #0b0c0c (top bar)
+ *   Text:       #212b32
+ *   Grey-1:     #4c6272
+ *   Grey-5:     #f0f4f5
+ *   Green:      #007f3b
+ *   Red:        #d5281b
+ *   White:      #ffffff
+ */
+
+/* ==================================================================
+   TIER 1: Top bar — dark strip with global links (like england.nhs.uk)
+   ================================================================== */
+.hl-topbar {
+  background: #0b0c0c;
+  border-bottom: 1px solid #333;
+}
+
+.hl-topbar__list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hl-topbar__list li {
+  margin: 0;
+}
+
+.hl-topbar__list a {
+  display: block;
+  padding: 8px 16px;
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hl-topbar__list a:hover,
+.hl-topbar__list a:focus {
+  text-decoration: underline;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ==================================================================
+   TIER 2: NHS Header — blue logo area
+   ================================================================== */
+.nhsuk-header {
+  padding: 0;
+}
+
+.nhsuk-header__container {
+  display: block;
+  padding: 20px 0;
+  overflow: visible;
+}
+
+.nhsuk-header__container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.nhsuk-header__logo {
+  float: none;
+  display: block;
+  position: relative;
+}
+
+.nhsuk-header__service-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ==================================================================
+   TIER 3: Section nav — blue bar below logo (like england.nhs.uk)
+   ================================================================== */
+.hl-section-nav {
+  background: #003087;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hl-section-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hl-section-nav__list li {
+  margin: 0;
+}
+
+.hl-section-nav__list a {
+  display: block;
+  padding: 12px 20px;
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hl-section-nav__list a:hover,
+.hl-section-nav__list a:focus {
+  text-decoration: underline;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.hl-section-nav__item--current a {
+  font-weight: 700;
+  border-bottom: 4px solid #fff;
+}
+
+/* ==================================================================
+   Plot images
+   ================================================================== */
+.dashboard-plot {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border: 1px solid #d8dde0;
+  border-radius: 4px;
+  background: #ffffff;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-plot:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.dashboard-figure {
+  margin: 0 0 24px 0;
+}
+
+.dashboard-figure figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* Full-width graphs (heatmap, boxplots, R2 comparison) */
+.dashboard-plot--wide {
+  max-width: 100%;
+}
+
+/* Hidden info text — revealed in modal */
+.hl-graph__info {
+  display: none;
+}
+
+/* Click hint on graph images */
+.hl-graph .dashboard-plot::after {
+  content: "";
+}
+
+.hl-graph figcaption::after {
+  content: " — click graph for details";
+  color: #005eb8;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ==================================================================
+   Modal overlay and card
+   ================================================================== */
+.hl-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(33, 43, 50, 0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 16px;
+  overflow-y: auto;
+}
+
+.hl-modal-overlay--open {
+  display: flex;
+}
+
+.hl-modal {
+  background: #fff;
+  border-radius: 8px;
+  max-width: 720px;
+  width: 100%;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hl-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #4c6272;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.hl-modal__close:hover,
+.hl-modal__close:focus {
+  color: #212b32;
+}
+
+.hl-modal__img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #d8dde0;
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.hl-modal__text {
+  color: #212b32;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hl-modal__text p {
+  margin-bottom: 8px;
+}
+
+/* ==================================================================
+   Classification report
+   ================================================================== */
+.dashboard-report {
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #212b32;
+  margin: 0;
+}
+
+/* ==================================================================
+   Table tweaks
+   ================================================================== */
+.nhsuk-table-container {
+  overflow-x: auto;
+  margin-bottom: 32px;
+}
+
+/* ==================================================================
+   Cards — equal height in rows
+   ================================================================== */
+.nhsuk-card {
+  margin-bottom: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.nhsuk-card__content {
+  flex: 1;
+}
+
+.nhsuk-grid-row {
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nhsuk-grid-row > [class*="nhsuk-grid-column"] {
+  display: flex;
+}
+
+/* ==================================================================
+   Metric cards
+   ================================================================== */
+.metric-card {
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: #005eb8;
+  margin: 8px 0;
+  line-height: 1.1;
+}
+
+/* Key-point summaries are now shown in the modal */
+
+/* ==================================================================
+   Form spacing
+   ================================================================== */
+.nhsuk-form-group {
+  margin-bottom: 24px;
+}
+
+.nhsuk-fieldset {
+  margin-bottom: 16px;
+}
+
+/* ==================================================================
+   Tag and callout tweaks
+   ================================================================== */
+.nhsuk-summary-list .nhsuk-tag {
+  vertical-align: middle;
+}
+
+.nhsuk-warning-callout .nhsuk-list--bullet li {
+  margin-bottom: 8px;
+}
+
+.nhsuk-warning-callout .nhsuk-tag {
+  margin-right: 8px;
+}
+
+/* ==================================================================
+   Responsive
+   ================================================================== */
+@media (max-width: 768px) {
+  .hl-topbar__list a {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .hl-section-nav__list a {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .metric-value {
+    font-size: 36px;
+  }
+}

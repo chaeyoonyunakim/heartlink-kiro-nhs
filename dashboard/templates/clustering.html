@@ -1,0 +1,51 @@
+{% extends "base_model.html" %}
+{% set active_page = "clustering" %}
+
+{% block title %}Clustering{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/model">Overview</a></li>
+      <li class="nhsuk-breadcrumb__item">Clustering</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Clustering — Patient Risk Group Discovery</h1>
+<p class="nhsuk-body-l">Unsupervised KMeans clustering with PCA dimensionality reduction. High-missingness variables excluded to prevent hospital bias.</p>
+
+<h2>Cluster selection</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure hl-graph">
+      <img src="/outputs/clustering_elbow.png" alt="Elbow plot showing KMeans inertia vs number of clusters" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Elbow plot — inertia vs k</figcaption>
+      <div class="hl-graph__info">
+        <p>Inertia measures how tightly patients are grouped within each cluster — lower is better. The "elbow" is where adding more clusters stops giving meaningful improvement.</p>
+        <p>This helps identify the natural number of patient groups in the data without overfitting to noise.</p>
+      </div>
+    </figure>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure hl-graph">
+      <img src="/outputs/clustering_scatter.png" alt="2D scatter plot showing patient clusters on first two PCA components" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Cluster scatter — first two PCA components</figcaption>
+      <div class="hl-graph__info">
+        <p>Each dot is a patient, coloured by their assigned cluster. PCA reduces the many clinical features into two dimensions for visualisation.</p>
+        <p>Distinct colour groupings suggest the model has found meaningful patient subgroups — potentially corresponding to different risk profiles or clinical presentations.</p>
+      </div>
+    </figure>
+  </div>
+</div>
+
+<div class="nhsuk-warning-callout">
+  <h3 class="nhsuk-warning-callout__label">
+    <span role="text"><span class="nhsuk-u-visually-hidden">Important: </span>Clinical interpretation</span>
+  </h3>
+  <p>Cluster assignments are exploratory and should not be used for clinical decision-making without further validation. The clusters reflect data patterns, not confirmed diagnostic categories.</p>
+</div>
+{% endblock %}

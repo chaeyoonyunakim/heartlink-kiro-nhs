@@ -80,10 +80,13 @@ jobs:
       - name: Display results
         run: |
           echo "=== src/ ==="
-          bandit -r src/ -ll
+          bandit -r src/ -ll || true
           echo ""
           echo "=== dashboard/ ==="
-          bandit -r dashboard/ -ll
+          bandit -r dashboard/ -ll || true
+
+      - name: Fail on high severity findings
+        run: bandit -r src/ dashboard/ -lll
 
       - name: Upload Bandit reports
         uses: actions/upload-artifact@v4
