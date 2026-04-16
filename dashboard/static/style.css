@@ -41,6 +41,13 @@
   vertical-align: middle;
 }
 
+.nhsuk-header__service-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  margin: 0 0 0 0;
+  padding: 0 0 8px 0;
+}
+
 .nhsuk-header__navigation-container {
   display: block;
   clear: both;
