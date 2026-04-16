@@ -57,3 +57,92 @@
 .nhsuk-grid-row {
   margin-bottom: 8px;
 }
+
+
+/* ---- User journeys secondary nav ---- */
+.nhsuk-navigation-container {
+  background: #003087;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nhsuk-navigation-container .nhsuk-header__navigation-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nhsuk-navigation-container .nhsuk-header__navigation-item {
+  border-top: none;
+}
+
+.nhsuk-navigation-container .nhsuk-header__navigation-link {
+  color: #ffffff;
+  font-size: 14px;
+  padding: 8px 16px;
+  display: block;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nhsuk-navigation-container .nhsuk-header__navigation-link:hover {
+  text-decoration: underline;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nhsuk-navigation-container .nhsuk-header__navigation-item--current .nhsuk-header__navigation-link {
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: 700;
+}
+
+/* ---- Metric cards ---- */
+.metric-card {
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: #005eb8;
+  margin: 8px 0;
+  line-height: 1.1;
+}
+
+/* ---- Form spacing ---- */
+.nhsuk-form-group {
+  margin-bottom: 24px;
+}
+
+.nhsuk-fieldset {
+  margin-bottom: 16px;
+}
+
+/* ---- Tag spacing in summary lists ---- */
+.nhsuk-summary-list .nhsuk-tag {
+  vertical-align: middle;
+}
+
+/* ---- Warning callout list items ---- */
+.nhsuk-warning-callout .nhsuk-list--bullet li {
+  margin-bottom: 8px;
+}
+
+.nhsuk-warning-callout .nhsuk-tag {
+  margin-right: 8px;
+}
+
+/* ---- Responsive nav overflow ---- */
+@media (max-width: 768px) {
+  .nhsuk-navigation-container .nhsuk-header__navigation-list {
+    flex-wrap: wrap;
+  }
+
+  .nhsuk-navigation-container .nhsuk-header__navigation-link {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .metric-value {
+    font-size: 36px;
+  }
+}

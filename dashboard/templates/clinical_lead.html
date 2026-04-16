@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block title %}Clinical Lead{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Home</a></li>
+      <li class="nhsuk-breadcrumb__item">Clinical Lead</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Service Performance Overview</h1>
+<p class="nhsuk-body-l">Model performance metrics, data quality summary, and pipeline reproducibility status for the HeartLink screening pathway.</p>
+
+<!-- Key metrics cards -->
+<h2>Model Performance Metrics</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">Accuracy</h3>
+        <p class="metric-value">0.80</p>
+        <p class="nhsuk-body-s"><span class="nhsuk-tag nhsuk-tag--green">Meets threshold</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">F1 Score (Disease)</h3>
+        <p class="metric-value">0.83</p>
+        <p class="nhsuk-body-s"><span class="nhsuk-tag nhsuk-tag--green">Meets threshold</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">Recall (Disease)</h3>
+        <p class="metric-value">0.85</p>
+        <p class="nhsuk-body-s"><span class="nhsuk-tag nhsuk-tag--green">High sensitivity</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">Precision (Disease)</h3>
+        <p class="metric-value">0.81</p>
+        <p class="nhsuk-body-s"><span class="nhsuk-tag nhsuk-tag--green">Acceptable</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Data quality summary -->
+<h2>Data Quality Summary</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+    <table class="nhsuk-table">
+      <caption class="nhsuk-table__caption">Guardrail flags triggered across the dataset</caption>
+      <thead class="nhsuk-table__head" role="rowgroup">
+        <tr class="nhsuk-table__row">
+          <th class="nhsuk-table__header" scope="col">Guardrail Rule</th>
+          <th class="nhsuk-table__header" scope="col">Records Flagged</th>
+          <th class="nhsuk-table__header" scope="col">% of Total</th>
+          <th class="nhsuk-table__header" scope="col">Severity</th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Cholesterol = 0 (biologically impossible)</td>
+          <td class="nhsuk-table__cell">172</td>
+          <td class="nhsuk-table__cell">18.7%</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">Critical</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Resting BP = 0 (biologically impossible)</td>
+          <td class="nhsuk-table__cell">1</td>
+          <td class="nhsuk-table__cell">0.1%</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">Critical</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">ca — missing values</td>
+          <td class="nhsuk-table__cell">611</td>
+          <td class="nhsuk-table__cell">66.4%</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--yellow">High</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">thal — missing values</td>
+          <td class="nhsuk-table__cell">486</td>
+          <td class="nhsuk-table__cell">52.8%</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--yellow">High</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">slope — missing values</td>
+          <td class="nhsuk-table__cell">309</td>
+          <td class="nhsuk-table__cell">33.6%</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--yellow">Medium</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Row-level missingness &gt; 50%</td>
+          <td class="nhsuk-table__cell">8</td>
+          <td class="nhsuk-table__cell">0.9%</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">Critical</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Quality Score</h3>
+        <p class="metric-value" style="color: #007f3b;">87%</p>
+        <p class="nhsuk-body-s">Records passing all guardrail checks after imputation pipeline.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pipeline reproducibility -->
+<h2>Pipeline Reproducibility</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Pipeline Status</h3>
+        <dl class="nhsuk-summary-list">
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Last run</dt>
+            <dd class="nhsuk-summary-list__value"><span class="nhsuk-tag nhsuk-tag--green">Completed</span></dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Random seed</dt>
+            <dd class="nhsuk-summary-list__value">42 (fixed)</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Idempotent</dt>
+            <dd class="nhsuk-summary-list__value"><span class="nhsuk-tag nhsuk-tag--green">Yes</span></dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Property tests</dt>
+            <dd class="nhsuk-summary-list__value"><span class="nhsuk-tag nhsuk-tag--green">15/15 passing</span></dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Train/test split</dt>
+            <dd class="nhsuk-summary-list__value">80/20 stratified</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Full Classification Report</h3>
+        <pre class="dashboard-report">{{ report }}</pre>
+        <a class="nhsuk-button nhsuk-button--secondary" href="/classification">View full classification analysis</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

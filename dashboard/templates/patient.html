@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}Patient Screening{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Home</a></li>
+      <li class="nhsuk-breadcrumb__item">Patient Screening</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Heart Disease Risk Screening</h1>
+<p class="nhsuk-body-l">Enter your health information below to receive a preliminary risk assessment. This is a screening tool only — it does not replace clinical diagnosis.</p>
+
+{% if result %}
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+    {% if result.colour == 'red' %}
+    <div class="nhsuk-warning-callout">
+      <h2 class="nhsuk-warning-callout__label">
+        <span role="text"><span class="nhsuk-u-visually-hidden">Important: </span>Risk Assessment Result</span>
+      </h2>
+      <p><strong>Risk Level:</strong> <span class="nhsuk-tag nhsuk-tag--red">{{ result.risk }}</span></p>
+      <p><strong>Cluster:</strong> {{ result.cluster }}</p>
+      <p>{{ result.detail }}</p>
+    </div>
+    {% elif result.colour == 'yellow' %}
+    <div class="nhsuk-warning-callout">
+      <h2 class="nhsuk-warning-callout__label">
+        <span role="text"><span class="nhsuk-u-visually-hidden">Important: </span>Risk Assessment Result</span>
+      </h2>
+      <p><strong>Risk Level:</strong> <span class="nhsuk-tag nhsuk-tag--yellow">{{ result.risk }}</span></p>
+      <p><strong>Cluster:</strong> {{ result.cluster }}</p>
+      <p>{{ result.detail }}</p>
+    </div>
+    {% else %}
+    <div class="nhsuk-care-card nhsuk-care-card--non-urgent">
+      <div class="nhsuk-care-card__heading-container">
+        <h2 class="nhsuk-care-card__heading"><span role="text">Risk Assessment Result</span></h2>
+      </div>
+      <div class="nhsuk-care-card__content">
+        <p><strong>Risk Level:</strong> <span class="nhsuk-tag nhsuk-tag--green">{{ result.risk }}</span></p>
+        <p><strong>Cluster:</strong> {{ result.cluster }}</p>
+        <p>{{ result.detail }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<form method="POST" action="/patient" novalidate>
+  <fieldset class="nhsuk-fieldset">
+    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
+      <h2 class="nhsuk-fieldset__heading">Your health information</h2>
+    </legend>
+
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="age">Age</label>
+          <span class="nhsuk-hint" id="age-hint">Your age in years</span>
+          <input class="nhsuk-input nhsuk-input--width-4" id="age" name="age" type="number" min="1" max="120" aria-describedby="age-hint" required>
+        </div>
+      </div>
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="sex">Sex</label>
+          <select class="nhsuk-select" id="sex" name="sex">
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+          </select>
+        </div>
+      </div>
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="cp">Chest pain type</label>
+          <select class="nhsuk-select" id="cp" name="cp">
+            <option value="0">Typical angina</option>
+            <option value="1">Atypical angina</option>
+            <option value="2">Non-anginal pain</option>
+            <option value="3">Asymptomatic</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="trestbps">Resting blood pressure</label>
+          <span class="nhsuk-hint" id="bp-hint">In mm Hg on admission</span>
+          <input class="nhsuk-input nhsuk-input--width-4" id="trestbps" name="trestbps" type="number" min="60" max="250" aria-describedby="bp-hint" required>
+        </div>
+      </div>
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="chol">Serum cholesterol</label>
+          <span class="nhsuk-hint" id="chol-hint">In mg/dl</span>
+          <input class="nhsuk-input nhsuk-input--width-4" id="chol" name="chol" type="number" min="50" max="600" aria-describedby="chol-hint" required>
+        </div>
+      </div>
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="fbs">Fasting blood sugar &gt; 120 mg/dl</label>
+          <div class="nhsuk-radios nhsuk-radios--inline">
+            <div class="nhsuk-radios__item">
+              <input class="nhsuk-radios__input" id="fbs-yes" name="fbs" type="radio" value="1">
+              <label class="nhsuk-label nhsuk-radios__label" for="fbs-yes">Yes</label>
+            </div>
+            <div class="nhsuk-radios__item">
+              <input class="nhsuk-radios__input" id="fbs-no" name="fbs" type="radio" value="0" checked>
+              <label class="nhsuk-label nhsuk-radios__label" for="fbs-no">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="restecg">Resting ECG result</label>
+          <select class="nhsuk-select" id="restecg" name="restecg">
+            <option value="0">Normal</option>
+            <option value="1">ST-T wave abnormality</option>
+            <option value="2">Left ventricular hypertrophy</option>
+          </select>
+        </div>
+      </div>
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="thalch">Maximum heart rate achieved</label>
+          <span class="nhsuk-hint" id="thalch-hint">Beats per minute</span>
+          <input class="nhsuk-input nhsuk-input--width-4" id="thalch" name="thalch" type="number" min="50" max="250" aria-describedby="thalch-hint" required>
+        </div>
+      </div>
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="exang">Exercise-induced angina</label>
+          <div class="nhsuk-radios nhsuk-radios--inline">
+            <div class="nhsuk-radios__item">
+              <input class="nhsuk-radios__input" id="exang-yes" name="exang" type="radio" value="1">
+              <label class="nhsuk-label nhsuk-radios__label" for="exang-yes">Yes</label>
+            </div>
+            <div class="nhsuk-radios__item">
+              <input class="nhsuk-radios__input" id="exang-no" name="exang" type="radio" value="0" checked>
+              <label class="nhsuk-label nhsuk-radios__label" for="exang-no">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="oldpeak">ST depression (oldpeak)</label>
+          <span class="nhsuk-hint" id="oldpeak-hint">Exercise vs rest</span>
+          <input class="nhsuk-input nhsuk-input--width-4" id="oldpeak" name="oldpeak" type="number" step="0.1" min="0" max="10" aria-describedby="oldpeak-hint" required>
+        </div>
+      </div>
+      <div class="nhsuk-grid-column-one-third">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="slope">Slope of peak exercise ST segment</label>
+          <select class="nhsuk-select" id="slope" name="slope">
+            <option value="1">Upsloping</option>
+            <option value="2">Flat</option>
+            <option value="3">Downsloping</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <button class="nhsuk-button" type="submit">Get risk assessment</button>
+</form>
+
+<div class="nhsuk-do-dont-list">
+  <h3 class="nhsuk-do-dont-list__label">Important information</h3>
+  <ul class="nhsuk-list nhsuk-list--cross" role="list">
+    <li><svg class="nhsuk-icon nhsuk-icon__cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34"><path d="M17 18.5c-.4 0-.8-.1-1.1-.4l-10-10c-.6-.6-.6-1.6 0-2.1.6-.6 1.5-.6 2.1 0l10 10c.6.6.6 1.5 0 2.1-.3.3-.6.4-1 .4z"></path><path d="M7 18.5c-.4 0-.8-.1-1.1-.4-.6-.6-.6-1.5 0-2.1l10-10c.6-.6 1.5-.6 2.1 0 .6.6.6 1.5 0 2.1l-10 10c-.3.3-.6.4-1 .4z"></path></svg>This tool does not provide a clinical diagnosis</li>
+    <li><svg class="nhsuk-icon nhsuk-icon__cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="34" height="34"><path d="M17 18.5c-.4 0-.8-.1-1.1-.4l-10-10c-.6-.6-.6-1.6 0-2.1.6-.6 1.5-.6 2.1 0l10 10c.6.6.6 1.5 0 2.1-.3.3-.6.4-1 .4z"></path><path d="M7 18.5c-.4 0-.8-.1-1.1-.4-.6-.6-.6-1.5 0-2.1l10-10c.6-.6 1.5-.6 2.1 0 .6.6.6 1.5 0 2.1l-10 10c-.3.3-.6.4-1 .4z"></path></svg>Do not use this result to self-medicate or delay seeking medical advice</li>
+  </ul>
+</div>
+{% endblock %}

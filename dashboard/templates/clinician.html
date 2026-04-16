@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block title %}Clinician Dashboard{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Home</a></li>
+      <li class="nhsuk-breadcrumb__item">Clinician Dashboard</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Clinical Triage Dashboard</h1>
+<p class="nhsuk-body-l">Review patient screening data, data quality flags, classification predictions, and cluster assignments.</p>
+
+<!-- Mock patient case -->
+<h2>Current Patient Case</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Patient ID: HL-2024-0847</h3>
+        <dl class="nhsuk-summary-list">
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Age</dt>
+            <dd class="nhsuk-summary-list__value">63</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Sex</dt>
+            <dd class="nhsuk-summary-list__value">Male</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Chest pain type</dt>
+            <dd class="nhsuk-summary-list__value">Asymptomatic</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Resting BP</dt>
+            <dd class="nhsuk-summary-list__value">145 mm Hg</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Cholesterol</dt>
+            <dd class="nhsuk-summary-list__value"><span class="nhsuk-tag nhsuk-tag--red">0 mg/dl — Flagged</span></dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Fasting blood sugar &gt; 120</dt>
+            <dd class="nhsuk-summary-list__value">Yes</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Resting ECG</dt>
+            <dd class="nhsuk-summary-list__value">ST-T wave abnormality</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Max heart rate</dt>
+            <dd class="nhsuk-summary-list__value">150 bpm</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Exercise angina</dt>
+            <dd class="nhsuk-summary-list__value">No</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Oldpeak</dt>
+            <dd class="nhsuk-summary-list__value">1.4</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Slope</dt>
+            <dd class="nhsuk-summary-list__value">Flat</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Major vessels (ca)</dt>
+            <dd class="nhsuk-summary-list__value"><span class="nhsuk-tag nhsuk-tag--yellow">Missing</span></dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Thalassemia (thal)</dt>
+            <dd class="nhsuk-summary-list__value"><span class="nhsuk-tag nhsuk-tag--yellow">Missing</span></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-column-one-third">
+    <!-- Data quality flags -->
+    <div class="nhsuk-warning-callout">
+      <h3 class="nhsuk-warning-callout__label">
+        <span role="text"><span class="nhsuk-u-visually-hidden">Important: </span>Data Quality Flags</span>
+      </h3>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li><span class="nhsuk-tag nhsuk-tag--red">Critical</span> Cholesterol = 0 mg/dl — biologically impossible value detected</li>
+        <li><span class="nhsuk-tag nhsuk-tag--yellow">Warning</span> ca (major vessels) — missing value</li>
+        <li><span class="nhsuk-tag nhsuk-tag--yellow">Warning</span> thal (thalassemia) — missing value</li>
+      </ul>
+      <p>The guardrail system has flagged this record. Cholesterol of 0 is likely a recording error. Consider requesting a re-test before clinical decision.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Classification prediction -->
+<h2>Classification Prediction</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Model Prediction</h3>
+        <p class="nhsuk-body-l"><span class="nhsuk-tag nhsuk-tag--red">Disease Predicted</span></p>
+        <p>Confidence: 78%</p>
+        <p class="nhsuk-body-s nhsuk-u-secondary-text-color">Note: Prediction made with imputed cholesterol value (median). Confidence may be lower than usual due to missing data.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Cluster Assignment</h3>
+        <p class="nhsuk-body-l"><span class="nhsuk-tag nhsuk-tag--red">Cluster 3 — High Risk</span></p>
+        <p>This patient groups with individuals showing elevated BP, older age, and exercise-related symptoms.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Feature importance -->
+<h2>Feature Importance for This Prediction</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+    <table class="nhsuk-table">
+      <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Top features contributing to this prediction</caption>
+      <thead class="nhsuk-table__head" role="rowgroup">
+        <tr class="nhsuk-table__row">
+          <th class="nhsuk-table__header" scope="col">Feature</th>
+          <th class="nhsuk-table__header" scope="col">Value</th>
+          <th class="nhsuk-table__header" scope="col">Importance</th>
+          <th class="nhsuk-table__header" scope="col">Direction</th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Chest pain type</td>
+          <td class="nhsuk-table__cell">Asymptomatic</td>
+          <td class="nhsuk-table__cell">High</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">↑ Risk</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Resting BP</td>
+          <td class="nhsuk-table__cell">145 mm Hg</td>
+          <td class="nhsuk-table__cell">Medium</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">↑ Risk</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Age</td>
+          <td class="nhsuk-table__cell">63</td>
+          <td class="nhsuk-table__cell">Medium</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">↑ Risk</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Oldpeak</td>
+          <td class="nhsuk-table__cell">1.4</td>
+          <td class="nhsuk-table__cell">Medium</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">↑ Risk</span></td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">Max heart rate</td>
+          <td class="nhsuk-table__cell">150 bpm</td>
+          <td class="nhsuk-table__cell">Low</td>
+          <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--green">↓ Risk</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Classification report -->
+<h2>Model Classification Report</h2>
+<div class="nhsuk-card">
+  <div class="nhsuk-card__content">
+    <pre class="dashboard-report">{{ report }}</pre>
+  </div>
+</div>
+{% endblock %}

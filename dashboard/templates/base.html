@@ -47,6 +47,32 @@
         </ul>
       </nav>
     </div>
+
+    <!-- User Journeys secondary navigation -->
+    <div class="nhsuk-navigation-container">
+      <nav class="nhsuk-navigation" id="user-navigation" role="navigation" aria-label="User journeys navigation">
+        <ul class="nhsuk-header__navigation-list user-journeys-nav">
+          <li class="nhsuk-header__navigation-item{% if active_page == 'patient' %} nhsuk-header__navigation-item--current{% endif %}">
+            <a class="nhsuk-header__navigation-link" href="/patient">Patient Screening</a>
+          </li>
+          <li class="nhsuk-header__navigation-item{% if active_page == 'clinician' %} nhsuk-header__navigation-item--current{% endif %}">
+            <a class="nhsuk-header__navigation-link" href="/clinician">Clinician Dashboard</a>
+          </li>
+          <li class="nhsuk-header__navigation-item{% if active_page == 'clinical-lead' %} nhsuk-header__navigation-item--current{% endif %}">
+            <a class="nhsuk-header__navigation-link" href="/clinical-lead">Clinical Lead</a>
+          </li>
+          <li class="nhsuk-header__navigation-item{% if active_page == 'radiographer' %} nhsuk-header__navigation-item--current{% endif %}">
+            <a class="nhsuk-header__navigation-link" href="/radiographer">Radiographer</a>
+          </li>
+          <li class="nhsuk-header__navigation-item{% if active_page == 'pharmacist' %} nhsuk-header__navigation-item--current{% endif %}">
+            <a class="nhsuk-header__navigation-link" href="/pharmacist">Pharmacist</a>
+          </li>
+          <li class="nhsuk-header__navigation-item{% if active_page == 'workforce' %} nhsuk-header__navigation-item--current{% endif %}">
+            <a class="nhsuk-header__navigation-link" href="/workforce">Workforce Leader</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <!-- Breadcrumb -->

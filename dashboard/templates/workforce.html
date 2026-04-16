@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% block title %}Workforce Leader{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Home</a></li>
+      <li class="nhsuk-breadcrumb__item">Workforce Leader</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Workforce &amp; Capacity Strategic Overview</h1>
+<p class="nhsuk-body-l">Screening capacity metrics, data quality trends, training needs analysis, and workforce optimisation opportunities for the cardiac care pathway.</p>
+
+<!-- Screening capacity -->
+<h2>Screening Capacity Metrics</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">Total Records</h3>
+        <p class="metric-value">920</p>
+        <p class="nhsuk-body-s">Across 4 hospitals</p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">Usable After QA</h3>
+        <p class="metric-value">740</p>
+        <p class="nhsuk-body-s"><span class="nhsuk-tag nhsuk-tag--green">80.4%</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">Flagged Records</h3>
+        <p class="metric-value">180</p>
+        <p class="nhsuk-body-s"><span class="nhsuk-tag nhsuk-tag--yellow">19.6%</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content metric-card">
+        <h3 class="nhsuk-card__heading nhsuk-heading-xs">Avg Screening Time</h3>
+        <p class="metric-value">12 min</p>
+        <p class="nhsuk-body-s">Per patient (estimated)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Data quality by hospital -->
+<h2>Data Quality Trends by Hospital</h2>
+<table class="nhsuk-table">
+  <caption class="nhsuk-table__caption">Data completeness and quality scores by contributing hospital</caption>
+  <thead class="nhsuk-table__head" role="rowgroup">
+    <tr class="nhsuk-table__row">
+      <th class="nhsuk-table__header" scope="col">Hospital</th>
+      <th class="nhsuk-table__header" scope="col">Records</th>
+      <th class="nhsuk-table__header" scope="col">Completeness</th>
+      <th class="nhsuk-table__header" scope="col">Zero-Value Flags</th>
+      <th class="nhsuk-table__header" scope="col">Quality Rating</th>
+    </tr>
+  </thead>
+  <tbody class="nhsuk-table__body">
+    <tr class="nhsuk-table__row">
+      <td class="nhsuk-table__cell">Cleveland Clinic</td>
+      <td class="nhsuk-table__cell">303</td>
+      <td class="nhsuk-table__cell">97.8%</td>
+      <td class="nhsuk-table__cell">6</td>
+      <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--green">Excellent</span></td>
+    </tr>
+    <tr class="nhsuk-table__row">
+      <td class="nhsuk-table__cell">Hungarian Institute</td>
+      <td class="nhsuk-table__cell">294</td>
+      <td class="nhsuk-table__cell">52.3%</td>
+      <td class="nhsuk-table__cell">89</td>
+      <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">Poor</span></td>
+    </tr>
+    <tr class="nhsuk-table__row">
+      <td class="nhsuk-table__cell">VA Long Beach</td>
+      <td class="nhsuk-table__cell">200</td>
+      <td class="nhsuk-table__cell">48.1%</td>
+      <td class="nhsuk-table__cell">67</td>
+      <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">Poor</span></td>
+    </tr>
+    <tr class="nhsuk-table__row">
+      <td class="nhsuk-table__cell">University Hospital Zurich</td>
+      <td class="nhsuk-table__cell">123</td>
+      <td class="nhsuk-table__cell">55.7%</td>
+      <td class="nhsuk-table__cell">18</td>
+      <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--yellow">Moderate</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Training needs -->
+<h2>Training Needs Analysis</h2>
+<div class="nhsuk-warning-callout">
+  <h3 class="nhsuk-warning-callout__label">
+    <span role="text"><span class="nhsuk-u-visually-hidden">Important: </span>Variables with Highest Missingness</span>
+  </h3>
+  <p>The following variables have the highest missingness rates across the dataset. These represent priority areas for staff training and equipment investment.</p>
+</div>
+
+<table class="nhsuk-table">
+  <caption class="nhsuk-table__caption">Training priority areas ranked by data missingness</caption>
+  <thead class="nhsuk-table__head" role="rowgroup">
+    <tr class="nhsuk-table__row">
+      <th class="nhsuk-table__header" scope="col">Variable</th>
+      <th class="nhsuk-table__header" scope="col">Clinical Procedure</th>
+      <th class="nhsuk-table__header" scope="col">Missingness Rate</th>
+      <th class="nhsuk-table__header" scope="col">Training Priority</th>
+      <th class="nhsuk-table__header" scope="col">Recommended Action</th>
+    </tr>
+  </thead>
+  <tbody class="nhsuk-table__body">
+    <tr class="nhsuk-table__row">
+      <td class="nhsuk-table__cell">ca (Major Vessels)</td>
+      <td class="nhsuk-table__cell">Fluoroscopy</td>
+      <td class="nhsuk-table__cell">66.4%</td>
+      <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">Critical</span></td>
+      <td class="nhsuk-table__cell">Invest in fluoroscopy training at Hungarian, VA, Zurich sites</td>
+    </tr>
+    <tr class="nhsuk-table__row">
+      <td class="nhsuk-table__cell">thal (Thalassemia)</td>
+      <td class="nhsuk-table__cell">Thallium stress test</td>
+      <td class="nhsuk-table__cell">52.8%</td>
+      <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--red">Critical</span></td>
+      <td class="nhsuk-table__cell">Standardise thallium test protocols across all sites</td>
+    </tr>
+    <tr class="nhsuk-table__row">
+      <td class="nhsuk-table__cell">slope (ST Segment)</td>
+      <td class="nhsuk-table__cell">Exercise ECG monitoring</td>
+      <td class="nhsuk-table__cell">33.6%</td>
+      <td class="nhsuk-table__cell"><span class="nhsuk-tag nhsuk-tag--yellow">High</span></td>
+      <td class="nhsuk-table__cell">Refresh ECG interpretation training for exercise testing staff</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Workforce optimisation -->
+<h2>Workforce Optimisation Opportunities</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Shift Screening to Primary Care</h3>
+        <dl class="nhsuk-summary-list">
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Low-risk patients screenable in GP</dt>
+            <dd class="nhsuk-summary-list__value">~45% of current volume</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Specialist time freed</dt>
+            <dd class="nhsuk-summary-list__value">~90 hours/month</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Required: simplified screening tool</dt>
+            <dd class="nhsuk-summary-list__value"><span class="nhsuk-tag nhsuk-tag--green">Available</span> (age, BP, chol)</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h3 class="nhsuk-card__heading">Shift Screening to Pharmacy</h3>
+        <dl class="nhsuk-summary-list">
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Walk-in screenings possible</dt>
+            <dd class="nhsuk-summary-list__value">~30% of current volume</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">GP appointment slots freed</dt>
+            <dd class="nhsuk-summary-list__value">~55 slots/month</dd>
+          </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Pharmacist tool</dt>
+            <dd class="nhsuk-summary-list__value"><a href="/pharmacist">View pharmacist screening tool</a></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
