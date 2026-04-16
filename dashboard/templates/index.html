@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+
+{% block title %}Overview{% endblock %}
+
+{% block content %}
+<h1>HeartLink Pipeline Dashboard</h1>
+
+<div class="nhsuk-inset-text">
+  <span class="nhsuk-u-visually-hidden">Information: </span>
+  <p>HeartLink is a reproducible machine learning pipeline for heart disease analysis using the UCI Heart Disease dataset (920 patients, 4 hospitals). This dashboard presents the pipeline outputs across three complementary analyses.</p>
+</div>
+
+<!-- Summary cards -->
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/classification">Classification</a>
+        </h2>
+        <p class="nhsuk-card__description">Binary prediction of heart disease presence using Random Forest. Evaluates accuracy, precision, recall, F1, and AUC-ROC.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/regression">Regression</a>
+        </h2>
+        <p class="nhsuk-card__description">Predicting maximum heart rate (thalch) across 8 dataset variants to quantify cardiac functional decline.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-card">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="/clustering">Clustering</a>
+        </h2>
+        <p class="nhsuk-card__description">Unsupervised patient risk group discovery using KMeans with PCA dimensionality reduction.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Key outputs preview -->
+<h2>Key outputs</h2>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/target_distribution.png" alt="Target variable distribution showing count of patients with and without heart disease" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Target variable distribution</figcaption>
+    </figure>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/classifier_performance.png" alt="Bar chart comparing classification metrics: accuracy, precision, recall, F1, and AUC-ROC" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Classifier performance summary</figcaption>
+    </figure>
+  </div>
+</div>
+
+<!-- Regression variant table -->
+{% if variants %}
+<h2>Regression variant comparison</h2>
+<div class="nhsuk-table-container">
+  <table class="nhsuk-table">
+    <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Regression variant comparison across 8 dataset variants</caption>
+    <thead class="nhsuk-table__head" role="rowgroup">
+      <tr role="row">
+        <th class="nhsuk-table__header" scope="col">Variant</th>
+        <th class="nhsuk-table__header" scope="col">Hospital</th>
+        <th class="nhsuk-table__header" scope="col">Imputation</th>
+        <th class="nhsuk-table__header" scope="col">Outlier removal</th>
+        <th class="nhsuk-table__header" scope="col">Samples</th>
+        <th class="nhsuk-table__header" scope="col">MAE</th>
+        <th class="nhsuk-table__header" scope="col">RMSE</th>
+        <th class="nhsuk-table__header" scope="col">R²</th>
+      </tr>
+    </thead>
+    <tbody class="nhsuk-table__body">
+      {% for v in variants %}
+      <tr role="row" class="nhsuk-table__row">
+        <td class="nhsuk-table__cell">{{ v.variant_label }}</td>
+        <td class="nhsuk-table__cell">{{ v.hospital }}</td>
+        <td class="nhsuk-table__cell">{{ v.imputation }}</td>
+        <td class="nhsuk-table__cell">{{ v.outlier_removal }}</td>
+        <td class="nhsuk-table__cell">{{ v.n_samples }}</td>
+        <td class="nhsuk-table__cell">{{ v.MAE }}</td>
+        <td class="nhsuk-table__cell">{{ v.RMSE }}</td>
+        <td class="nhsuk-table__cell">{{ v.R2 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set active_page = "clustering" %}
+
+{% block title %}Clustering{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Overview</a></li>
+      <li class="nhsuk-breadcrumb__item">Clustering</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Clustering — Patient Risk Group Discovery</h1>
+
+<p class="nhsuk-body-l">Unsupervised KMeans clustering with PCA dimensionality reduction. High-missingness variables (ca, thal, slope) are excluded to prevent hospital bias. Optimal k is selected by silhouette score across k = 2 to 8.</p>
+
+<h2>Cluster selection</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/clustering_elbow.png" alt="Elbow plot showing KMeans inertia decreasing as the number of clusters increases from 2 to 8" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Elbow plot — inertia vs number of clusters</figcaption>
+    </figure>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/clustering_scatter.png" alt="2D scatter plot showing patient clusters plotted on the first two principal components from PCA" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Cluster scatter — first two PCA components</figcaption>
+    </figure>
+  </div>
+</div>
+
+<div class="nhsuk-warning-callout">
+  <h3 class="nhsuk-warning-callout__label">
+    <span role="text">
+      <span class="nhsuk-u-visually-hidden">Important: </span>
+      Clinical interpretation
+    </span>
+  </h3>
+  <p>Cluster assignments are exploratory and should not be used for clinical decision-making without further validation. The clusters reflect data patterns, not confirmed diagnostic categories.</p>
+</div>
+{% endblock %}

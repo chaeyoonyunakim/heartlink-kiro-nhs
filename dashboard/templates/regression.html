@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% set active_page = "regression" %}
+
+{% block title %}Regression{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Overview</a></li>
+      <li class="nhsuk-breadcrumb__item">Regression</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Regression — Maximum Heart Rate Prediction</h1>
+
+<p class="nhsuk-body-l">Linear Regression predicting maximum heart rate (thalch) from age, resting blood pressure, and cholesterol. Eight dataset variants are tested across hospital inclusion, imputation method, and outlier removal.</p>
+
+<h2>R² comparison across variants</h2>
+<figure class="dashboard-figure">
+  <img src="/outputs/regression_r2_comparison.png" alt="Bar chart comparing R-squared scores across 8 regression dataset variants" class="dashboard-plot">
+  <figcaption class="nhsuk-u-secondary-text-colour">R² scores for all 8 dataset variants — best variant highlighted</figcaption>
+</figure>
+
+<h2>Best variant — predicted vs actual</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/regression_scatter.png" alt="Scatter plot of predicted versus actual maximum heart rate values for the best regression variant" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Predicted vs actual thalch</figcaption>
+    </figure>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/regression_residuals.png" alt="Residual plot showing prediction errors for the best regression variant" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Residual plot</figcaption>
+    </figure>
+  </div>
+</div>
+
+{% if variants %}
+<h2>Variant comparison table</h2>
+<div class="nhsuk-table-container">
+  <table class="nhsuk-table">
+    <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Regression variant comparison showing MAE, RMSE, and R² for each of 8 variants</caption>
+    <thead class="nhsuk-table__head" role="rowgroup">
+      <tr role="row">
+        <th class="nhsuk-table__header" scope="col">Variant</th>
+        <th class="nhsuk-table__header" scope="col">Hospital</th>
+        <th class="nhsuk-table__header" scope="col">Imputation</th>
+        <th class="nhsuk-table__header" scope="col">Outliers</th>
+        <th class="nhsuk-table__header" scope="col">n</th>
+        <th class="nhsuk-table__header" scope="col">MAE</th>
+        <th class="nhsuk-table__header" scope="col">RMSE</th>
+        <th class="nhsuk-table__header" scope="col">R²</th>
+      </tr>
+    </thead>
+    <tbody class="nhsuk-table__body">
+      {% for v in variants %}
+      <tr role="row" class="nhsuk-table__row">
+        <td class="nhsuk-table__cell">{{ v.variant_label }}</td>
+        <td class="nhsuk-table__cell">{{ v.hospital }}</td>
+        <td class="nhsuk-table__cell">{{ v.imputation }}</td>
+        <td class="nhsuk-table__cell">{{ v.outlier_removal }}</td>
+        <td class="nhsuk-table__cell">{{ v.n_samples }}</td>
+        <td class="nhsuk-table__cell">{{ v.MAE }}</td>
+        <td class="nhsuk-table__cell">{{ v.RMSE }}</td>
+        <td class="nhsuk-table__cell">{{ v.R2 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% set active_page = "eda" %}
+
+{% block title %}Exploratory Data Analysis{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Overview</a></li>
+      <li class="nhsuk-breadcrumb__item">EDA</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Exploratory Data Analysis</h1>
+
+<p class="nhsuk-body-l">Summary statistics, distributions, and correlations across the UCI Heart Disease dataset (920 patients from 4 hospitals).</p>
+
+<h2>Correlation heatmap</h2>
+<figure class="dashboard-figure">
+  <img src="/outputs/correlation_heatmap.png" alt="Correlation heatmap of numerical features showing pairwise Pearson correlations" class="dashboard-plot">
+  <figcaption class="nhsuk-u-secondary-text-colour">Pairwise Pearson correlations between numerical features</figcaption>
+</figure>
+
+<h2>Target variable distribution</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/target_distribution.png" alt="Bar chart showing count of patients with and without heart disease" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Binary target: 0 = no disease, 1 = disease present</figcaption>
+    </figure>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/target_chol.png" alt="Cholesterol distribution grouped by target variable" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Cholesterol distribution by target variable</figcaption>
+    </figure>
+  </div>
+</div>
+
+<h2>Numerical feature distributions</h2>
+<div class="nhsuk-grid-row">
+  {% for plot in plots if plot.startswith('distribution_') %}
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/{{ plot }}" alt="Histogram showing distribution of {{ plot.replace('distribution_', '').replace('.png', '') }}" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">{{ plot.replace('distribution_', '').replace('.png', '') }}</figcaption>
+    </figure>
+  </div>
+  {% endfor %}
+</div>
+
+<h2>Categorical feature distributions</h2>
+<div class="nhsuk-grid-row">
+  {% for plot in plots if plot.startswith('cat_distribution_') %}
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/{{ plot }}" alt="Bar chart showing distribution of {{ plot.replace('cat_distribution_', '').replace('.png', '') }}" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">{{ plot.replace('cat_distribution_', '').replace('.png', '') }}</figcaption>
+    </figure>
+  </div>
+  {% endfor %}
+</div>
+
+<h2>Boxplots by sex and target variable</h2>
+<div class="nhsuk-grid-row">
+  {% for plot in plots if plot.startswith('boxplot_') %}
+  <div class="nhsuk-grid-column-full">
+    <figure class="dashboard-figure">
+      <img src="/outputs/{{ plot }}" alt="Boxplot of {{ plot.replace('boxplot_', '').replace('.png', '') }} grouped by sex and target variable" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">{{ plot.replace('boxplot_', '').replace('.png', '') }} — by sex and target variable</figcaption>
+    </figure>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

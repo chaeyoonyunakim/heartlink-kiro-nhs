@@ -1,0 +1,59 @@
+/*
+ * HeartLink Dashboard — Custom styles
+ * Built on top of nhsuk-frontend design system.
+ *
+ * NHS colour references:
+ *   Blue:       #005eb8
+ *   Dark blue:  #003087
+ *   Text:       #212b32
+ *   Grey-1:     #4c6272
+ *   Grey-5:     #f0f4f5
+ *   Green:      #007f3b
+ *   Red:        #d5281b
+ *   White:      #ffffff
+ */
+
+/* ---- Plot images ---- */
+.dashboard-plot {
+  width: 100%;
+  height: auto;
+  border: 1px solid #d8dde0;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.dashboard-figure {
+  margin: 0 0 24px 0;
+}
+
+.dashboard-figure figcaption {
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+/* ---- Classification report ---- */
+.dashboard-report {
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #212b32;
+  margin: 0;
+}
+
+/* ---- Table tweaks ---- */
+.nhsuk-table-container {
+  overflow-x: auto;
+  margin-bottom: 32px;
+}
+
+/* ---- Card spacing ---- */
+.nhsuk-card {
+  margin-bottom: 16px;
+}
+
+/* ---- Responsive grid gap ---- */
+.nhsuk-grid-row {
+  margin-bottom: 8px;
+}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% set active_page = "classification" %}
+
+{% block title %}Classification{% endblock %}
+
+{% block breadcrumb %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <div class="nhsuk-width-container">
+    <ol class="nhsuk-breadcrumb__list">
+      <li class="nhsuk-breadcrumb__item"><a class="nhsuk-breadcrumb__link" href="/">Overview</a></li>
+      <li class="nhsuk-breadcrumb__item">Classification</li>
+    </ol>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<h1>Classification — Heart Disease Prediction</h1>
+
+<p class="nhsuk-body-l">Binary classification using Random Forest to predict heart disease presence. The model is trained on an 80/20 stratified split with random seed 42.</p>
+
+<h2>Performance summary</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/classifier_performance.png" alt="Bar chart comparing accuracy, precision, recall, F1, and AUC-ROC scores" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Classifier performance metrics</figcaption>
+    </figure>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/feature_importance.png" alt="Horizontal bar chart showing top 10 most important features for the Random Forest model" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Top 10 feature importances</figcaption>
+    </figure>
+  </div>
+</div>
+
+<h2>Diagnostic plots</h2>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/confusion_matrix.png" alt="Confusion matrix heatmap showing true positives, true negatives, false positives, and false negatives" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">Confusion matrix</figcaption>
+    </figure>
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+    <figure class="dashboard-figure">
+      <img src="/outputs/roc_curve.png" alt="ROC curve showing the trade-off between true positive rate and false positive rate" class="dashboard-plot">
+      <figcaption class="nhsuk-u-secondary-text-colour">ROC curve</figcaption>
+    </figure>
+  </div>
+</div>
+
+<h2>Classification report</h2>
+<div class="nhsuk-inset-text">
+  <pre class="dashboard-report">{{ report }}</pre>
+</div>
+{% endblock %}
