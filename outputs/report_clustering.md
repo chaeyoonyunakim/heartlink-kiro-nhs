@@ -22,13 +22,13 @@ The clustering pipeline applies stricter data cleaning to prevent hospital bias:
 
 ## Elbow Plot
 
-**File:** `clustering_elbow.png`
+**File:** [clustering_elbow.png](clustering_elbow.png)
 
 Inertia (within-cluster sum of squares) decreases as k increases. The "elbow" — where the rate of decrease slows — suggests the natural number of clusters. Beyond this point, adding clusters provides diminishing returns and risks overfitting to noise.
 
 ## Cluster Scatter Plot
 
-**File:** `clustering_scatter.png`
+**File:** [clustering_scatter.png](clustering_scatter.png)
 
 Each dot represents a patient, coloured by cluster assignment, plotted on the first two principal components from PCA. Distinct colour groupings indicate the model has found meaningful patient subgroups. Overlap between clusters is expected — cardiovascular risk exists on a spectrum, not in discrete categories.
 

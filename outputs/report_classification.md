@@ -18,13 +18,13 @@
 | F1-score (Disease) | 0.83 |
 | AUC-ROC | ~0.88 |
 
-**File:** `classifier_performance.png`
+**File:** [classifier_performance.png](classifier_performance.png)
 
 All metrics exceed 0.80. High recall (0.85) means the model catches 85% of true disease cases — critical in a screening context where missing a positive case is more costly than a false alarm. Precision of 0.81 means 81% of patients flagged as disease actually have it.
 
 ## Full Classification Report
 
-**File:** `classification_report.txt`
+**File:** [classification_report.txt](classification_report.txt)
 
 ```
               precision    recall  f1-score   support
@@ -41,7 +41,7 @@ The model performs slightly better on the disease class (F1 = 0.83) than the no-
 
 ## Feature Importance
 
-**File:** `feature_importance.png`
+**File:** [feature_importance.png](feature_importance.png)
 
 The model relies most heavily on:
 1. Chest pain type (cp) — asymptomatic presentation is the strongest predictor
@@ -54,7 +54,7 @@ These align with established cardiology. The model's reliance on exercise-relate
 
 ## Confusion Matrix
 
-**File:** `confusion_matrix.png`
+**File:** [confusion_matrix.png](confusion_matrix.png)
 
 The diagonal cells show correct predictions. Off-diagonal cells show:
 - **False positives** (top-right): healthy patients incorrectly flagged as disease — leads to unnecessary follow-up but no harm
@@ -64,7 +64,7 @@ The model's higher recall (0.85) for disease means it prioritises catching true 
 
 ## ROC Curve
 
-**File:** `roc_curve.png`
+**File:** [roc_curve.png](roc_curve.png)
 
 The ROC curve shows the trade-off between true positive rate and false positive rate at different classification thresholds. The curve bows strongly towards the top-left corner, indicating strong discriminative ability. An AUC near 0.88 means the model correctly ranks a random disease patient higher than a random healthy patient approximately 88% of the time.
 

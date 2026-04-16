@@ -18,7 +18,7 @@
 
 ## Variant Comparison
 
-**File:** `regression_variant_comparison.csv`, `regression_r2_comparison.png`
+**Files:** [regression_variant_comparison.csv](regression_variant_comparison.csv), [regression_r2_comparison.png](regression_r2_comparison.png)
 
 | Variant | Hospital | Imputation | Outliers | n | MAE | RMSE | R² |
 |---------|----------|------------|----------|---|-----|------|----|
@@ -45,13 +45,13 @@
 
 ## Best Variant — Predicted vs Actual
 
-**File:** `regression_scatter.png`
+**File:** [regression_scatter.png](regression_scatter.png)
 
 Points close to the red dashed line indicate accurate predictions. The scatter shows the model captures the general downward trend (older patients → lower thalch) but with substantial spread (±40 bpm). The three features alone are insufficient for precise individual-level prediction.
 
 ## Best Variant — Residual Plot
 
-**File:** `regression_residuals.png`
+**File:** [regression_residuals.png](regression_residuals.png)
 
 Residuals are roughly evenly scattered around zero with no obvious pattern, confirming the linear model's assumptions are reasonable. Some large residuals (±40 bpm) indicate cases where the model fails — likely patients with unusual exercise capacity for their age/BP/cholesterol profile.
 
